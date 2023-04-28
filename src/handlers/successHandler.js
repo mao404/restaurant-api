@@ -1,10 +1,7 @@
-
 class Success {
-
-    constructor(data) {
-        this.status = 'OK',
-        this.data = data
-    }
+  constructor(data) {
+    (this.status = "OK"), (this.data = data);
+  }
 }
 
-module.exports = Success
+module.exports = Success;

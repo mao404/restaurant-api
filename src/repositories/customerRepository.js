@@ -1,31 +1,27 @@
-const Customer = require('../models/customer')
+const Customer = require("../models/customer");
 
 class CustomerRepository {
+  constructor() {}
 
-    constructor() {
+  async findAll() {
+    return await Customer.findAll();
+  }
 
-    }
+  async findByIdNumber(id) {
+    return await Customer.findOne(id);
+  }
 
-    async findAll() {
-        return await Customer.findAll()
-    }
+  async save(user) {
+    return await Customer.create(user);
+  }
 
-    async findByIdNumber(id) {
-        return await Customer.findOne(id)
-    }
+  async update(id, user) {
+    return await Customer.update(id, user, { new: true });
+  }
 
-    async save(user) {
-        return await Customer.create(user)
-    }
-
-    async update(id, user) {
-        return await Customer.update(id, user, {new: true})
-    }
-
-    async remove(id) {
-        return await Customer.destroy(id)
-    }
+  async remove(id) {
+    return await Customer.destroy(id);
+  }
 }
-
 
 module.exports = CustomerRepository;

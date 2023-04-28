@@ -8,8 +8,8 @@
       "email": "fervaldes11@gmail.com"
     }
   },
-  
-  "servers":[
+
+  "servers": [
     {
       "url": "https://localhost:3000/api/v1",
       "description": "Development"
@@ -19,29 +19,27 @@
       "description": "Production"
     }
   ],
-  "tags": [    
+  "tags": [
     {
       "name": "users",
       "description": "Operations about users."
     }
   ],
-  "paths": {    
+  "paths": {
     "/users/": {
       "get": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Get a list of all existing users.",
-        "description": "",             
+        "description": "",
         "responses": {
           "200": {
             "description": "The array of users in JSON format.",
             "content": {
-              "application/json":{
-                "schema":{
+              "application/json": {
+                "schema": {
                   "type": "array",
-                  "items":{
-                    "$ref": "#/components/schemas/User"                    
+                  "items": {
+                    "$ref": "#/components/schemas/User"
                   }
                 }
               }
@@ -50,9 +48,7 @@
         }
       },
       "post": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Create a new user.",
         "description": "",
         "requestBody": {
@@ -73,21 +69,19 @@
     },
     "/users/{id}": {
       "put": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Update an existing user by providing the id.",
-        "description": "",           
-        "parameters":[          
+        "description": "",
+        "parameters": [
           {
             "name": "id",
             "in": "path",
             "description": "The id of the user that needs to be updated.",
             "required": true,
             "schema": {
-              "type":"integer"
+              "type": "integer"
             }
-          }          
+          }
         ],
         "requestBody": {
           "content": {
@@ -97,38 +91,36 @@
               }
             }
           }
-        }, 
+        },
         "responses": {
           "200": {
             "description": "The user updated",
-            "content":{
-              "application/json":{
-                "schema":{
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/User" 
+                  "$ref": "#/components/schemas/User"
                 }
-              }              
+              }
             }
           }
         }
       },
       "delete": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Delete an existing user by providing the id.",
         "description": "",
-        "parameters":[          
+        "parameters": [
           {
             "name": "id",
             "in": "path",
             "description": "The id of the user that needs to be deleted.",
             "required": true,
             "schema": {
-              "type":"integer"
+              "type": "integer"
             }
-          }          
-        ],     
+          }
+        ],
         "responses": {
           "200": {
             "description": "User deleted."
@@ -140,20 +132,18 @@
   "components": {
     "schemas": {
       "User": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "type": "object",
         "properties": {
-          "id":{
+          "id": {
             "description": "The user id.",
-            "type": "integer",          
+            "type": "integer",
             "example": "3"
           },
-          "name":{
+          "name": {
             "description": "The user name.",
-            "type":"string",          
-            "example":"Enzo Fernandez"
+            "type": "string",
+            "example": "Enzo Fernandez"
           }
         }
       }

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx nodemon src",
+    "prettier": "npx prettier --write .",
     "start": "node src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
