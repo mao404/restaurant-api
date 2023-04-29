@@ -8,12 +8,19 @@ const {
   deleteCustomer,
 } = require("../controllers/customers");
 
+const {
+  postRequestValidations,
+  putRequestValidations,
+  getRequestByIdValidations,
+  deleteRequestValidations,
+} = require('../middlewares/customers/')
+
 const router = Router();
 
 router.get("/", findAll);
-router.get("/:id", getById);
-router.post("/", createCustomer);
-router.put("/:id", updateCustomer);
-router.delete("/:id", deleteCustomer);
+router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
+router.post("/", postRequestValidations, createCustomer);
+router.put("/:id(\\d+)/", putRequestValidations, updateCustomer);
+router.delete("/:id(\\d+)/", deleteRequestValidations, deleteCustomer);
 
 module.exports = router;
