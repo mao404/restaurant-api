@@ -1,32 +1,47 @@
-const { Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
+const sequelize = require("../loaders/sequelize/db");
 
-module.exports = (sequelize) => {
-  const Customer = sequelize.define("Customer", {
+const Customer = sequelize.define(
+  "Customer",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      unique: true,
+    },
     Name: {
-      type: Sequelize.STRING(30),
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
     Telephone: {
-      type: Sequelize.INTEGER(10),
+      type: DataTypes.INTEGER(10),
       allowNull: false,
     },
     idNumber: {
-      type: Sequelize.INTEGER(12),
+      type: DataTypes.INTEGER(12),
       allowNull: false,
-      primaryKey: true,
+      unique: true,
     },
     createdAt: {
       type: "TIMESTAMP",
-      defaultValue: Sequelize.NOW,
+      defaultValue: DataTypes.NOW,
       allowNull: false,
     },
     updatedAt: {
       type: "DATETIME",
-      defaultValue: sequelize.literal(
-        "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-      ),
+      defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
-  });
-  return Customer;
-};
+  },
+  {
+    /*   indexes: [
+    {
+      unique: true,
+      fields: ['idNumber']
+    }
+  ] */
+  }
+);
+
+module.exports = Customer;

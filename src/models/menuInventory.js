@@ -1,6 +1,6 @@
-const { Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
+const sequelize = require("../loaders/sequelize/db");
 
-module.exports = (sequelize) => {
-  const menuInventory = sequelize.define("menuInventory", {});
-  return menuInventory;
-};
+const menuInventory = sequelize.define("menuInventory", {});
+
+module.exports = menuInventory;

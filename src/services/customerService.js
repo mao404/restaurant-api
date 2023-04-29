@@ -1,20 +1,24 @@
 const CustomerRepository = require("../repositories/customerRepository");
 const repository = new CustomerRepository();
 
-const findById = async (id) => {
-  return await repository.findByIdNumber(id);
-};
-
 const findAll = async () => {
   return await repository.findAll();
 };
 
-const save = async (user) => {
-  return await repository.save(user);
+const findById = async (id) => {
+  return await repository.findById(id);
 };
 
-const update = async (id, user) => {
-  return await repository.update(id, user);
+const findByIdNumber = async (idNumber) => {
+  return await repository.findByIdNumber(idNumber);
+};
+
+const save = async (customer) => {
+  return await repository.create(customer);
+};
+
+const update = async (id, customer) => {
+  return await repository.update(id, customer);
 };
 
 const remove = async (id) => {
@@ -22,8 +26,9 @@ const remove = async (id) => {
 };
 
 module.exports = {
-  findById,
   findAll,
+  findById,
+  findByIdNumber,
   save,
   update,
   remove,

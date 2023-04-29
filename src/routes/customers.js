@@ -1,14 +1,16 @@
 const { Router } = require("express");
 const {
+  findAll,
+  getById,
+  getByIdNumber,
   createCustomer,
   updateCustomer,
-  getById,
   deleteCustomer,
 } = require("../controllers/customers");
 
 const router = Router();
 
-router.get("/");
+router.get("/", findAll);
 router.get("/:id", getById);
 router.post("/", createCustomer);
 router.put("/:id", updateCustomer);

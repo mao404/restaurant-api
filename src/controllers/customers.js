@@ -1,6 +1,42 @@
 const express = require("express");
 const customerService = require("../services/customerService");
 const Success = require("../handlers/successHandler");
+const { Logger } = require("winston");
+
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+const findAll = async (req, res, next) => {
+  try {
+    let customers = req.body;
+    customers = await customerService.findAll(customers);
+
+    res.status(201).json(new Success(customers));
+  } catch (err) {
+    next(err);
+  }
+};
+const getById = async (req, res, next) => {
+  try {
+    let { id } = req.params;
+    customer = await customerService.findById(id);
+    res.json(new Success(customer));
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getByIdNumber = async (req, res, next) => {
+  try {
+    let { cedula } = req.params;
+    customer = await customerService.findByIdNumber(cedula);
+    res.json(new Success(customer));
+  } catch (err) {
+    next(err);
+  }
+};
 
 /**
  *
@@ -26,25 +62,11 @@ const createCustomer = async (req, res, next) => {
 const updateCustomer = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let user = req.body;
+    let customer = req.body;
 
-    const userUpdated = await customerService.update(id, user);
+    const customerUpdated = await customerService.update(id, customer);
 
-    res.json(new Success(userUpdated));
-  } catch (err) {
-    next(err);
-  }
-};
-
-/**
- *
- * @param {express.Request} req
- * @param {express.Response} res
- */
-const getById = async (req, res, next) => {
-  try {
-    const user = await customerService.findById(req.params.id);
-    res.json(new Success(user));
+    res.json(new Success(customerUpdated));
   } catch (err) {
     next(err);
   }
@@ -58,16 +80,18 @@ const getById = async (req, res, next) => {
 const deleteCustomer = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const user = await customerService.remove(id);
-    res.json(new Success(user));
+    const customer = await customerService.remove(id);
+    res.json(new Success(customer));
   } catch (err) {
     next(err);
   }
 };
 
 module.exports = {
+  findAll,
+  getById,
+  getByIdNumber,
   createCustomer,
   updateCustomer,
-  getById,
   deleteCustomer,
 };

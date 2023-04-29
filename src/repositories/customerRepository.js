@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Customer = require("../models/customer");
 
 class CustomerRepository {
@@ -7,20 +8,24 @@ class CustomerRepository {
     return await Customer.findAll();
   }
 
-  async findByIdNumber(id) {
-    return await Customer.findOne(id);
+  async findById(id) {
+    return await Customer.findByPk(id);
   }
 
-  async save(user) {
-    return await Customer.create(user);
+  async findByIdNumber(idNumber) {
+    return await Customer.findOne({ where: { idNumber: idNumber } });
   }
 
-  async update(id, user) {
-    return await Customer.update(id, user, { new: true });
+  async create(customer) {
+    return await Customer.create(customer);
+  }
+
+  async update(id, customer) {
+    return await Customer.update(customer, { where: { id: id } });
   }
 
   async remove(id) {
-    return await Customer.destroy(id);
+    return await Customer.destroy({ where: { id: id } });
   }
 }
 

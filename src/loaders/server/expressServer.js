@@ -8,7 +8,7 @@ class ExpressServer {
   constructor() {
     this.app = express();
     this.port = config.port;
-    this.basePathUser = `${config.api.prefix}/customers`;
+    this.basePathCustomer = `${config.api.prefix}/customers`;
 
     this._middlewares();
     this._swaggerConfig();
@@ -31,7 +31,7 @@ class ExpressServer {
       res.status(200).end();
     });
 
-    this.app.use(this.basePathUser, require("../../routes/customers"));
+    this.app.use(this.basePathCustomer, require("../../routes/customers"));
   }
 
   _notFound() {
