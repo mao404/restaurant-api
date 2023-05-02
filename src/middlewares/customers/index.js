@@ -33,10 +33,7 @@ const postRequestValidations = [
   validationResult,
 ];
 
-const putRequestValidations = [
-  _idRequired,
-  _idExist,  
-  validationResult];
+const putRequestValidations = [_idRequired, _idExist, validationResult];
 
 const getRequestByIdValidations = [_idRequired, _idExist, validationResult];
 

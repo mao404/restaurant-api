@@ -1,8 +1,7 @@
 const express = require("express");
-const userService = require('../services/userService')
+const userService = require("../services/userService");
 const Success = require("../handlers/successHandler");
 const { Logger } = require("winston");
-
 
 const findAll = async (req, res, next) => {
   try {

@@ -25,9 +25,9 @@ const _idExist = check("id").custom(async (id = "") => {
   }
 });
 
-const _emailRequired = check('email', "Email required").not().isEmpty();
-const _emailValid = check('email', "Not a valid Email address").isEmail();
-const _password = check('password', "Password required").not().isEmpty();
+const _emailRequired = check("email", "Email required").not().isEmpty();
+const _emailValid = check("email", "Not a valid Email address").isEmail();
+const _password = check("password", "Password required").not().isEmpty();
 
 const postRequestValidations = [
   _nameRequired,
