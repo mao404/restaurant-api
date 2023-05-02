@@ -10,11 +10,11 @@ const Customer = sequelize.define(
       primaryKey: true,
       unique: true,
     },
-    Name: {
+    name: {
       type: DataTypes.STRING(30),
       allowNull: false,
     },
-    Telephone: {
+    telephone: {
       type: DataTypes.INTEGER(10),
       allowNull: false,
     },

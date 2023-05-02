@@ -8,7 +8,7 @@ const User = sequelize.define("User", {
     primaryKey: true,
     unique: true,
   },
-  Name: {
+  name: {
     type: DataTypes.STRING(30),
     allowNull: false,
   },
@@ -16,15 +16,15 @@ const User = sequelize.define("User", {
     type: DataTypes.INTEGER(12),
     allowNull: false,
   },
-  Logo: {
-    type: DataTypes.STRING,
-    allowNull: true,
+  enable: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
-  Password: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Role: {
+  role: {
     type: DataTypes.STRING(30),
     allowNull: false,
     defaultValue: "ADMIN_ROLE",
