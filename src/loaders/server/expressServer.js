@@ -33,7 +33,7 @@ class ExpressServer {
     });
 
     this.app.use(this.basePathCustomer, require("../../routes/customers"));
-    this.app.use(this.basePathUser, require("../../routes/users"))
+    this.app.use(this.basePathUser, require("../../routes/users"));
   }
 
   _notFound() {

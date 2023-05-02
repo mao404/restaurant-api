@@ -3,11 +3,11 @@ const AppError = require("../../errors/appError");
 const customerService = require("../../services/customerService");
 const { validationResult } = require("../common");
 
-const _nameRequired = check("Name", "Name required").not().isEmpty();
-const _telephoneRequired = check("Telephone", "Telephone required")
+const _nameRequired = check("name", "Name required").not().isEmpty();
+const _telephoneRequired = check("telephone", "Telephone required")
   .not()
   .isEmpty();
-const _idNumberRequired = check("idNumber", "Telephone required")
+const _idNumberRequired = check("idNumber", "ID number required")
   .not()
   .isEmpty();
 const _idNumberExist = check("idNumber").custom(async (idNumber = "") => {

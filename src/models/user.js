@@ -16,9 +16,9 @@ const User = sequelize.define("User", {
     type: DataTypes.INTEGER(12),
     allowNull: false,
   },
-  enable: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true,
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
@@ -29,6 +29,11 @@ const User = sequelize.define("User", {
     allowNull: false,
     defaultValue: "ADMIN_ROLE",
   },
+  enable: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
   createdAt: {
     type: "TIMESTAMP",
     defaultValue: DataTypes.NOW,
@@ -36,9 +41,7 @@ const User = sequelize.define("User", {
   },
   updatedAt: {
     type: "DATETIME",
-    defaultValue: sequelize.literal(
-      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-    ),
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     allowNull: false,
   },
 });
