@@ -13,7 +13,7 @@ const findAll = async (req, res, next) => {
     let customers = req.body;
     customers = await customerService.findAll(customers);
 
-    res.status(201).json(new Success(customers));
+    res.status(200).json(new Success(customers));
   } catch (err) {
     next(err);
   }
