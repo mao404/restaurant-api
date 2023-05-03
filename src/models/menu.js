@@ -7,15 +7,15 @@ const Menu = sequelize.define("Menu", {
     autoIncrement: true,
     primaryKey: true,
   },
-  Title: {
+  title: {
     type: DataTypes.STRING(30),
     allowNull: false,
   },
-  Description: {
-    type: DataTypes.INTEGER(2),
+  description: {
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
-  Price: {
+  price: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
@@ -26,9 +26,7 @@ const Menu = sequelize.define("Menu", {
   },
   updatedAt: {
     type: "DATETIME",
-    defaultValue: sequelize.literal(
-      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-    ),
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     allowNull: false,
   },
 });
