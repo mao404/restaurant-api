@@ -7,12 +7,17 @@ const Inventory = sequelize.define("Inventory", {
     autoIncrement: true,
     primaryKey: true,
   },
-  Title: {
+  title: {
     type: DataTypes.STRING(30),
     allowNull: false,
   },
-  Stock: {
-    type: DataTypes.INTEGER,
+  unitType: {
+    type: DataTypes.STRING(4),
+    allowNull: false,
+    enum: ["kg", "gr", "lt", "ml", "unit"],
+  },
+  quantity: {
+    type: DataTypes.INTEGER(10),
     allowNull: false,
   },
   createdAt: {
@@ -22,9 +27,7 @@ const Inventory = sequelize.define("Inventory", {
   },
   updatedAt: {
     type: "DATETIME",
-    defaultValue: sequelize.literal(
-      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-    ),
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     allowNull: false,
   },
 });
