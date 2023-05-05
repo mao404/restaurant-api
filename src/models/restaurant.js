@@ -2,23 +2,23 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../loaders/sequelize/db");
 
 const Restaurant = sequelize.define("Restaurant", {
-  Name: {
+  name: {
     type: DataTypes.STRING(30),
     allowNull: false,
   },
-  Capacity: {
-    type: DataTypes.INTEGER(2),
+  capacity: {
+    type: DataTypes.INTEGER(3),
     allowNull: false,
   },
-  Logo: {
+  logo: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  RIF: {
-    type: DataTypes.INTEGER(10),
+  rif: {
+    type: DataTypes.STRING(10),
     allowNull: false,
   },
-  Address: {
+  address: {
     type: DataTypes.STRING(30),
     allowNull: false,
   },
@@ -29,9 +29,7 @@ const Restaurant = sequelize.define("Restaurant", {
   },
   updatedAt: {
     type: "DATETIME",
-    defaultValue: sequelize.literal(
-      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-    ),
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     allowNull: false,
   },
 });
