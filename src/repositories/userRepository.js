@@ -13,6 +13,10 @@ class UserRepository {
     return await User.findByPk(id);
   }
 
+  async findByEmail(email) {
+    return await User.findOne({ where: { email } });
+  }
+
   async findByIdNumber(idNumber) {
     return await User.findOne({ where: { idNumber: idNumber } });
   }

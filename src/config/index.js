@@ -25,4 +25,8 @@ module.exports = {
     pass: process.env.DB_PASS,
     database: process.env.DB_DATABASE,
   },
+  auth: {
+    secret: process.env.AUTH_SECRET,
+    ttl: process.env.AUTH_TIME,
+  },
 };

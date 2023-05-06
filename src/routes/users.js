@@ -9,6 +9,7 @@ const {
 } = require("../controllers/users");
 
 const {
+  getAllRequestValidations,
   postRequestValidations,
   putRequestValidations,
   getRequestByIdValidations,
@@ -17,7 +18,7 @@ const {
 
 const router = Router();
 
-router.get("/", findAll);
+router.get("/", getAllRequestValidations, findAll);
 router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
 router.post("/", postRequestValidations, createUser);
 router.put("/:id(\\d+)/", putRequestValidations, updateUser);

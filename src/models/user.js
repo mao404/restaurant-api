@@ -27,7 +27,7 @@ const User = sequelize.define("User", {
   role: {
     type: DataTypes.STRING(30),
     allowNull: false,
-    defaultValue: "ADMIN_ROLE",
+    defaultValue: "USER_ROLE",
   },
   enable: {
     type: DataTypes.BOOLEAN,

@@ -9,6 +9,10 @@ const findById = async (id) => {
   return await repository.findById(id);
 };
 
+const findByEmail = async (email) => {
+  return await repository.findByEmail(email);
+};
+
 const findByIdNumber = async (idNumber) => {
   return await repository.findByIdNumber(idNumber);
 };
@@ -28,6 +32,7 @@ const remove = async (id) => {
 module.exports = {
   findAll,
   findById,
+  findByEmail,
   findByIdNumber,
   save,
   update,
