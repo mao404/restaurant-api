@@ -87,12 +87,20 @@ const validRole = (user, ...roles) => {
   return true;
 };
 
+const register = async (user) => {
+  await userService.save(user);
+
+  //TODO: Validate email with nodemailer
+  return "User registered, you can login now";
+};
+
 _encrypt = (id) => {
   return jwt.sign({ id }, config.auth.secret, { expiresIn: config.auth.ttl });
 };
 
 module.exports = {
   login,
+  register,
   validToken,
   validRole,
 };

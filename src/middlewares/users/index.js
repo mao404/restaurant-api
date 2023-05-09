@@ -1,23 +1,9 @@
 const { check } = require("express-validator");
 const AppError = require("../../errors/appError");
 const userService = require("../../services/userService");
-const { validationResult } = require("../common");
-const { ROLES, ADMIN_ROLE, CHEF_ROLE } = require("../../constants/index");
+const { validationResult, userRegisterValidations } = require("../common");
+const { ROLES, ADMIN_ROLE } = require("../../constants/index");
 const { validJWT, hasRole } = require("../auth/");
-
-const _nameRequired = check("name", "Name required").not().isEmpty();
-const _telephoneRequired = check("telephone", "Telephone required")
-  .not()
-  .isEmpty();
-const _idNumberRequired = check("idNumber", "ID number required")
-  .not()
-  .isEmpty();
-const _idNumberExist = check("idNumber").custom(async (idNumber = "") => {
-  const userFound = await userService.findByIdNumber(idNumber);
-  if (userFound) {
-    throw new AppError("Cedula already exist in DB", 400);
-  }
-});
 
 const _idRequired = check("id", "ID is required").not().isEmpty();
 const _idExist = check("id").custom(async (id = "") => {
@@ -26,10 +12,6 @@ const _idExist = check("id").custom(async (id = "") => {
     throw new AppError("The ID does not exist in DB", 400);
   }
 });
-
-const _emailRequired = check("email", "Email required").not().isEmpty();
-const _emailValid = check("email", "Not a valid Email address").isEmail();
-const _password = check("password", "Password required").not().isEmpty();
 
 const _optionalEmailValid = check("email", "Email is invalid")
   .optional()
@@ -54,13 +36,7 @@ const _roleValid = check("role")
 const postRequestValidations = [
   validJWT,
   hasRole(ADMIN_ROLE),
-  _nameRequired,
-  _telephoneRequired,
-  _idNumberRequired,
-  _idNumberExist,
-  _emailRequired,
-  _emailValid,
-  _password,
+  userRegisterValidations,
   _roleValid,
   validationResult,
 ];

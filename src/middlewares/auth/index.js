@@ -1,5 +1,5 @@
 const { check } = require("express-validator");
-const { validationResult } = require("../common");
+const { validationResult, userRegisterValidations } = require("../common");
 const { validToken, validRole } = require("../../services/authService");
 
 const _emailRequired = check("email", "Email required").not().isEmpty();
@@ -7,13 +7,6 @@ const _emailValid = check("email", "Email is invalid").isEmail();
 const _passwordRequired = check("password", "Password required")
   .not()
   .isEmpty();
-
-const postLoginRequestValidations = [
-  _emailRequired,
-  _emailValid,
-  _passwordRequired,
-  validationResult,
-];
 
 const validJWT = async (req, res, next) => {
   try {
@@ -37,8 +30,21 @@ const hasRole = (...roles) => {
   };
 };
 
+const postLoginRequestValidations = [
+  _emailRequired,
+  _emailValid,
+  _passwordRequired,
+  validationResult,
+];
+
+const postRegisterRequestValidations = [
+  userRegisterValidations,
+  validationResult,
+];
+
 module.exports = {
   postLoginRequestValidations,
+  postRegisterRequestValidations,
   validJWT,
   hasRole,
 };
