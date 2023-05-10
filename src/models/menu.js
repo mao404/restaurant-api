@@ -32,3 +32,11 @@ const Menu = sequelize.define("Menu", {
 });
 
 module.exports = Menu;
+
+const Inventory = require("../models/inventory");
+Menu.belongsToMany(Inventory, { through: "menuInventory" });
+Menu.hasOne(Inventory);
+
+const Order = require("../models/order");
+Menu.belongsToMany(Order, { through: require("../models/orderMenu") });
+Menu.belongsTo(Order);

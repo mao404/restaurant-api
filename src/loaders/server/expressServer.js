@@ -8,7 +8,6 @@ class ExpressServer {
   constructor() {
     this.app = express();
     this.port = config.port;
-    this.basePathCustomer = `${config.api.prefix}/customers`;
     this.basePathUser = `${config.api.prefix}/users`;
     this.basePathMenu = `${config.api.prefix}/menu`;
     this.basePathInventory = `${config.api.prefix}/inventory`;
@@ -36,7 +35,6 @@ class ExpressServer {
       res.status(200).end();
     });
 
-    this.app.use(this.basePathCustomer, require("../../routes/customers"));
     this.app.use(this.basePathUser, require("../../routes/users"));
     this.app.use(this.basePathMenu, require("../../routes/menu"));
     this.app.use(this.basePathInventory, require("../../routes/inventory"));

@@ -20,6 +20,10 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  telephone: {
+    type: DataTypes.INTEGER(12),
+    allowNull: false,
+  },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -47,3 +51,5 @@ const User = sequelize.define("User", {
 });
 
 module.exports = User;
+
+User.hasOne(require("../models/order"));

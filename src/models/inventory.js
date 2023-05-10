@@ -33,3 +33,7 @@ const Inventory = sequelize.define("Inventory", {
 });
 
 module.exports = Inventory;
+
+const Menu = require("../models/menu");
+Inventory.belongsToMany(Menu, { through: "menuInventory" });
+Inventory.belongsTo(Menu);

@@ -19,6 +19,11 @@ const _telephoneRequired = check("telephone", "Telephone required")
 const _idNumberRequired = check("idNumber", "ID number required")
   .not()
   .isEmpty();
+
+const _idNumberIsNumber = check(
+  "idNumber",
+  "Cedula is not a number"
+).isNumeric();
 const _idNumberExist = check("idNumber").custom(async (idNumber = "") => {
   const userFound = await userService.findByIdNumber(idNumber);
   if (userFound) {
@@ -42,6 +47,7 @@ const userRegisterValidations = [
   _nameRequired,
   _telephoneRequired,
   _idNumberRequired,
+  _idNumberIsNumber,
   _idNumberExist,
   _emailRequired,
   _emailValid,

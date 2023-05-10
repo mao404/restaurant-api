@@ -7,10 +7,6 @@ const Order = sequelize.define("Order", {
     autoIncrement: true,
     primaryKey: true,
   },
-  Comment: {
-    type: DataTypes.STRING(30),
-    allowNull: false,
-  },
   totalPrice: {
     type: DataTypes.FLOAT,
     allowNull: true,
@@ -22,11 +18,15 @@ const Order = sequelize.define("Order", {
   },
   updatedAt: {
     type: "DATETIME",
-    defaultValue: sequelize.literal(
-      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-    ),
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     allowNull: false,
   },
 });
 
 module.exports = Order;
+
+Order.belongsTo(require("../models/user"));
+
+const Menu = require("../models/menu");
+Order.belongsToMany(Menu, { through: "orderMenu" });
+Order.hasOne(Menu);

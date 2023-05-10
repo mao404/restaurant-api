@@ -2,7 +2,11 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../loaders/sequelize/db");
 
 const orderMenu = sequelize.define("orderMenu", {
-  Ammount: {
+  quantity: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  comment: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -13,9 +17,7 @@ const orderMenu = sequelize.define("orderMenu", {
   },
   updatedAt: {
     type: "DATETIME",
-    defaultValue: sequelize.literal(
-      "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-    ),
+    defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     allowNull: false,
   },
 });
