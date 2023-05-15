@@ -29,4 +29,3 @@ Order.belongsTo(require("../models/user"));
 
 const Menu = require("../models/menu");
 Order.belongsToMany(Menu, { through: "orderMenu" });
-Order.hasOne(Menu);

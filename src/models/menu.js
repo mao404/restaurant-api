@@ -19,6 +19,10 @@ const Menu = sequelize.define("Menu", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   createdAt: {
     type: "TIMESTAMP",
     defaultValue: DataTypes.NOW,
@@ -39,4 +43,3 @@ Menu.hasOne(Inventory);
 
 const Order = require("../models/order");
 Menu.belongsToMany(Order, { through: require("../models/orderMenu") });
-Menu.belongsTo(Order);

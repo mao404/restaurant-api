@@ -7,8 +7,8 @@ const orderMenu = sequelize.define("orderMenu", {
     allowNull: false,
   },
   comment: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+    type: DataTypes.STRING(50),
+    allowNull: true,
   },
   createdAt: {
     type: "TIMESTAMP",

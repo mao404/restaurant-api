@@ -13,6 +13,7 @@ class ExpressServer {
     this.basePathInventory = `${config.api.prefix}/inventory`;
     this.basePathRestaurant = `${config.api.prefix}/restaurant`;
     this.basePathLogin = `${config.api.prefix}/auth`;
+    this.basePathOrder = `${config.api.prefix}/order`;
 
     this._middlewares();
     this._swaggerConfig();
@@ -40,6 +41,7 @@ class ExpressServer {
     this.app.use(this.basePathInventory, require("../../routes/inventory"));
     this.app.use(this.basePathRestaurant, require("../../routes/restaurant"));
     this.app.use(this.basePathLogin, require("../../routes/auth"));
+    this.app.use(this.basePathOrder, require("../../routes/order"));
   }
 
   _notFound() {
