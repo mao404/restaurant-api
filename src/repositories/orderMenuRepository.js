@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const OrderMenu = require("../models/orderMenu");
 
 class OrderMenuRepository {
@@ -15,12 +16,17 @@ class OrderMenuRepository {
     return await OrderMenu.findOne({ where: { UserId } });
   }
 
+  async findByOrderId(OrderId) {
+    return await OrderMenu.findAll({ where: { OrderId } });
+  }
+
   async create(orderMenu) {
     return await OrderMenu.bulkCreate(orderMenu);
   }
 
-  async update(id, order) {
-    return await OrderMenu.update(order, { where: { id } });
+  //TO FIX
+  async update(OrderId, order) {
+    return await OrderMenu.update(order, { where: { OrderId } });
   }
 }
 

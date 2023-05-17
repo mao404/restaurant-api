@@ -1,12 +1,13 @@
 const express = require("express");
 const userService = require("../services/userService");
 const Success = require("../handlers/successHandler");
-const { Logger } = require("winston");
+const logger = require("../loaders/logger");
 
 const findAll = async (req, res, next) => {
   try {
-    let users = req.body;
-    users = await userService.findAll(users);
+    logger.info("Query: " + JSON.stringify(req.query));
+    //let users = req.body;
+    users = await userService.findAll(req.query.filter, req.query.options);
 
     res.status(200).json(new Success(users));
   } catch (err) {

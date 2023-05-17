@@ -13,6 +13,10 @@ const findByUserId = async (UserId) => {
   return await repository.findByUserId(UserId);
 };
 
+const findByOrderId = async (OrderId) => {
+  return await repository.findByOrderId(OrderId);
+};
+
 const save = async (orderMenu) => {
   return await repository.create(orderMenu);
 };
@@ -29,6 +33,7 @@ module.exports = {
   findAll,
   findById,
   findByUserId,
+  findByOrderId,
   save,
   update,
   remove,

@@ -1,12 +1,28 @@
-const { where } = require("sequelize");
+const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 class UserRepository {
   constructor() {}
 
-  async findAll() {
-    return await User.findAll();
+  async findAll(filter, options) {
+    let where = {};
+    if (filter.name) {
+      where.name = {
+        [Op.eq]: filter.name,
+      };
+    }
+    if (filter.email) {
+      where.email = {
+        [Op.eq]: filter.email,
+      };
+    }
+    if (filter.idNumber) {
+      where.idNumber = {
+        [Op.eq]: filter.idNumber,
+      };
+    }
+    return await User.findAll({ where });
   }
 
   async findById(id) {

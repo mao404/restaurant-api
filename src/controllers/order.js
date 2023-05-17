@@ -16,11 +16,35 @@ const findAll = async (req, res, next) => {
   }
 };
 
+const findAllDetailed = async (req, res, next) => {
+  try {
+    let order = req.body;
+    order = await orderMenuService.findAll(order);
+
+    res.status(200).json(new Success(order));
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getById = async (req, res, next) => {
   try {
     let { id } = req.params;
     inventory = await orderService.findById(id);
     res.json(new Success(inventory));
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getByIdDetailed = async (req, res, next) => {
+  try {
+    let { id } = req.params;
+    console.log(id);
+    let order = req.body;
+    order = await orderMenuService.findByOrderId(id);
+
+    res.status(200).json(new Success(order));
   } catch (err) {
     next(err);
   }
@@ -69,6 +93,19 @@ const updateOrder = async (req, res, next) => {
   }
 };
 
+const updateOrderDetailed = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let order = req.body;
+
+    const orderUpdated = await orderMenuService.update(id, order);
+
+    res.json(new Success(orderUpdated));
+  } catch (err) {
+    next(err);
+  }
+};
+
 const deleteOrder = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -82,9 +119,12 @@ const deleteOrder = async (req, res, next) => {
 
 module.exports = {
   findAll,
+  findAllDetailed,
   getById,
+  getByIdDetailed,
   getByUserId,
   createOrder,
   updateOrder,
+  updateOrderDetailed,
   deleteOrder,
 };
