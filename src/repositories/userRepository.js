@@ -5,24 +5,42 @@ const User = require("../models/user");
 class UserRepository {
   constructor() {}
 
-  async findAll(filter, options) {
+  async findAll({ name, email, idNumber }, { limit, offset, order }) {
     let where = {};
-    if (filter.name) {
+    if (name) {
       where.name = {
-        [Op.eq]: filter.name,
+        [Op.like]: `%${name}%`,
       };
     }
-    if (filter.email) {
+    if (email) {
       where.email = {
-        [Op.eq]: filter.email,
+        [Op.eq]: email,
       };
     }
-    if (filter.idNumber) {
+    if (idNumber) {
       where.idNumber = {
-        [Op.eq]: filter.idNumber,
+        [Op.eq]: idNumber,
       };
     }
-    return await User.findAll({ where });
+
+    let config = {
+      where,
+      attributes: [
+        "id",
+        "name",
+        "idNumber",
+        "email",
+        "telephone",
+        "role",
+        "enable",
+      ],
+    };
+
+    if (order) {
+      config.order = [order.split(";")];
+    }
+
+    return await User.findAll(config);
   }
 
   async findById(id) {

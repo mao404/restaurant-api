@@ -6,8 +6,10 @@ const logger = require("../loaders/logger");
 const findAll = async (req, res, next) => {
   try {
     logger.info("Query: " + JSON.stringify(req.query));
-    //let users = req.body;
-    users = await userService.findAll(req.query.filter, req.query.options);
+
+    const { filter = "", options = "" } = req.query;
+
+    users = await userService.findAll(filter, options);
 
     res.status(200).json(new Success(users));
   } catch (err) {
