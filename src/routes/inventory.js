@@ -13,11 +13,12 @@ const {
   putRequestValidations,
   getRequestByIdValidations,
   deleteRequestValidations,
+  getAllRequestValidations,
 } = require("../middlewares/inventory");
 
 const router = Router();
 
-router.get("/", findAll);
+router.get("/", getAllRequestValidations, findAll);
 router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
 router.post("/", postRequestValidations, createInventory);
 router.put("/:id(\\d+)/", putRequestValidations, updateInventory);

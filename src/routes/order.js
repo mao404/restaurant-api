@@ -11,17 +11,23 @@ const {
   deleteOrder,
 } = require("../controllers/order");
 
-//const {} = require("../middlewares/users");
+const {
+  postRequestValidations,
+  putRequestValidations,
+  getRequestByIdValidations,
+  deleteRequestValidations,
+  getAllRequestValidations,
+} = require("../middlewares/order");
 
 const router = Router();
 
-router.get("/", findAll);
+router.get("/", getAllRequestValidations, findAll);
 router.get("/details", findAllDetailed);
-router.get("/:id(\\d+)/", getById);
+router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
 router.get("/details/:id", getByIdDetailed);
-router.post("/", createOrder);
+router.post("/", postRequestValidations, createOrder);
 router.put("/:id(\\d+)/", updateOrder);
 router.put("/details/:id", updateOrderDetailed);
-router.delete("/:id(\\d+)/", deleteOrder);
+router.delete("/:id(\\d+)/", deleteRequestValidations, deleteOrder);
 
 module.exports = router;

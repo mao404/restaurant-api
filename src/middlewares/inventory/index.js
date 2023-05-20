@@ -2,6 +2,8 @@ const { check } = require("express-validator");
 const AppError = require("../../errors/appError");
 const inventoryService = require("../../services/inventoryService");
 const { validationResult } = require("../common");
+const { ADMIN_ROLE } = require("../../constants/index");
+const { validJWT, hasRole } = require("../auth");
 
 const _titleRequired = check("title", "Title required").not().isEmpty();
 const _unitRequired = check("unitType", "Type of measurement required")
@@ -26,6 +28,7 @@ const _idExist = check("id").custom(async (id = "") => {
 });
 
 const postRequestValidations = [
+  validJWT,
   _titleRequired,
   _unitRequired,
   _quantityRequired,
@@ -33,13 +36,31 @@ const postRequestValidations = [
   validationResult,
 ];
 
-const putRequestValidations = [_idRequired, _idExist, validationResult];
+const putRequestValidations = [
+  validJWT,
+  hasRole(ADMIN_ROLE),
+  _idRequired,
+  _idExist,
+  validationResult,
+];
 
-const getRequestByIdValidations = [_idRequired, _idExist, validationResult];
+const getRequestByIdValidations = [
+  validJWT,
+  hasRole(ADMIN_ROLE),
+  _idRequired,
+  _idExist,
+  validationResult,
+];
 
-const deleteRequestValidations = [_idRequired, _idExist, validationResult];
+const deleteRequestValidations = [
+  validJWT,
+  hasRole(ADMIN_ROLE),
+  _idRequired,
+  _idExist,
+  validationResult,
+];
 
-const getAllRequestValidations = [];
+const getAllRequestValidations = [validJWT, hasRole(ADMIN_ROLE)];
 
 module.exports = {
   postRequestValidations,

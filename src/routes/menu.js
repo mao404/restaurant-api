@@ -13,11 +13,12 @@ const {
   putRequestValidations,
   getRequestByIdValidations,
   deleteRequestValidations,
+  getAllRequestValidations,
 } = require("../middlewares/menu");
 
 const router = Router();
 
-router.get("/", findAll);
+router.get("/", getAllRequestValidations, findAll);
 router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
 router.post("/", postRequestValidations, createMenu);
 router.put("/:id(\\d+)/", putRequestValidations, updateMenu);

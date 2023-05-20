@@ -1,6 +1,8 @@
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const Order = require("../models/order");
+const Menu = require("../models/menu");
 
 class UserRepository {
   constructor() {}
@@ -34,6 +36,11 @@ class UserRepository {
         "role",
         "enable",
       ],
+      include: [
+        {
+          model: Order,
+        },
+      ],
     };
 
     if (order) {
@@ -44,7 +51,19 @@ class UserRepository {
   }
 
   async findById(id) {
-    return await User.findByPk(id);
+    let config = {
+      attributes: [
+        "id",
+        "name",
+        "idNumber",
+        "email",
+        "telephone",
+        "role",
+        "enable",
+      ],
+    };
+
+    return await User.findByPk(id, config);
   }
 
   async findByEmail(email) {
