@@ -5,9 +5,26 @@ const { validationResult } = require("../common");
 const { ADMIN_ROLE } = require("../../constants/index");
 const { validJWT, hasRole } = require("../auth");
 
-// const _qtyRequired = check("quantity", "Quantity is not a number").isNumeric();
-// const _menuIdRequired = check("MenuId", "Menu ID is not a number").isNumeric();
-// const _optionalCommentValid = check("comment", "Comment is not a string").optional().isString();
+const _qtyRequired = check("orders.*.quantity", "Quantity is required")
+  .not()
+  .isEmpty();
+const _qtyNumeric = check(
+  "orders.*.quantity",
+  "Quantity is not a number"
+).isNumeric();
+const _menuIdRequired = check("orders.*.quantity", "Menu ID is required")
+  .not()
+  .isEmpty();
+const _menuIdNumeric = check(
+  "orders.*.MenuId",
+  "Menu ID is not a number"
+).isNumeric();
+const _optionalCommentValid = check(
+  "orders.*.comment",
+  "Comment is not a string"
+)
+  .optional()
+  .isString();
 const _optionalTotalPriceValid = check(
   "totalPrice",
   "Total price is not a number"
@@ -26,6 +43,11 @@ const _idExist = check("id").custom(async (id = "") => {
 const postRequestValidations = [
   validJWT,
   hasRole(ADMIN_ROLE),
+  _qtyRequired,
+  _qtyNumeric,
+  _menuIdRequired,
+  _menuIdNumeric,
+  _optionalCommentValid,
   _optionalTotalPriceValid,
   validationResult,
 ];
@@ -34,6 +56,8 @@ const putRequestValidations = [
   validJWT,
   hasRole(ADMIN_ROLE),
   _optionalTotalPriceValid,
+  _idRequired,
+  _idExist,
   validationResult,
 ];
 

@@ -83,10 +83,11 @@ const createOrder = async (req, res, next) => {
 const updateOrder = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let order = req.body;
-
-    const orderUpdated = await orderService.update(id, order);
-
+    let orders = req.body.orders;
+    const putOrderId = orders
+      .flat()
+      .map((p) => Object.assign(p, { OrderId: id }));
+    const orderUpdated = await orderMenuService.update(id, orders);
     res.json(new Success(orderUpdated));
   } catch (err) {
     next(err);

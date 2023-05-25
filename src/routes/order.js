@@ -22,12 +22,12 @@ const {
 const router = Router();
 
 router.get("/", getAllRequestValidations, findAll);
-router.get("/details", findAllDetailed);
 router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
-router.get("/details/:id", getByIdDetailed);
 router.post("/", postRequestValidations, createOrder);
-router.put("/:id(\\d+)/", updateOrder);
-router.put("/details/:id", updateOrderDetailed);
+router.put("/:id(\\d+)/", putRequestValidations, updateOrder);
 router.delete("/:id(\\d+)/", deleteRequestValidations, deleteOrder);
+//router.get("/details", findAllDetailed);
+//router.get("/details/:id", getByIdDetailed);
+//router.put("/details/:id", updateOrderDetailed);
 
 module.exports = router;

@@ -26,7 +26,10 @@ class OrderMenuRepository {
 
   //TO FIX
   async update(OrderId, order) {
-    return await OrderMenu.update(order, { where: { OrderId } });
+    return await OrderMenu.bulkCreate(order, {
+      where: { OrderId },
+      updateOnDuplicate: ["comment", "quantity"],
+    });
   }
 }
 
