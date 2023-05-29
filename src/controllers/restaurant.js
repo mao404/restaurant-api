@@ -1,5 +1,6 @@
 const express = require("express");
 const restaurantService = require("../services/restaurantService");
+const imageService = require("../services/imageService");
 const Success = require("../handlers/successHandler");
 const { Logger } = require("winston");
 
@@ -48,9 +49,23 @@ const updateRestaurant = async (req, res, next) => {
   }
 };
 
+const uploadResLogo = async (req, res, next) => {
+  try {
+    const menuId = req.body.id;
+    const logo = req.file;
+
+    res.json(
+      new Success(await imageService.uploadRestaurantLogo(menuId, logo))
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   findAll,
   getById,
   createRestaurant,
   updateRestaurant,
+  uploadResLogo,
 };

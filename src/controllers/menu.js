@@ -1,7 +1,8 @@
 const express = require("express");
 const menuService = require("../services/menuService");
+const imageService = require("../services/imageService");
 const Success = require("../handlers/successHandler");
-const { Logger } = require("winston");
+const logger = require("../loaders/logger/");
 
 const findAll = async (req, res, next) => {
   try {
@@ -68,6 +69,17 @@ const deleteMenu = async (req, res, next) => {
   }
 };
 
+const uploadMenuImage = async (req, res, next) => {
+  try {
+    const menuId = req.body.id;
+    const image = req.file;
+
+    res.json(new Success(await imageService.uploadMenuImage(menuId, image)));
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   findAll,
   getById,
@@ -75,4 +87,5 @@ module.exports = {
   createMenu,
   updateMenu,
   deleteMenu,
+  uploadMenuImage,
 };

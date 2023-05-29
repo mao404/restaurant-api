@@ -26,8 +26,5 @@ router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
 router.post("/", postRequestValidations, createOrder);
 router.put("/:id(\\d+)/", putRequestValidations, updateOrder);
 router.delete("/:id(\\d+)/", deleteRequestValidations, deleteOrder);
-//router.get("/details", findAllDetailed);
-//router.get("/details/:id", getByIdDetailed);
-//router.put("/details/:id", updateOrderDetailed);
 
 module.exports = router;
