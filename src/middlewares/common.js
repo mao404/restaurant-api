@@ -1,4 +1,4 @@
-const { validationResult, check } = require("express-validator");
+const { validationResult, check, checkSchema } = require("express-validator");
 const AppError = require("../errors/appError");
 const userService = require("../services/userService");
 
@@ -43,6 +43,15 @@ const _emailExist = check("email").custom(async (email = "") => {
   }
 });
 
+const imageRequired = checkSchema({
+  image: {
+    custom: {
+      options: (value, { req, path }) => !!req.file,
+      errorMessage: "You should upload a file",
+    },
+  },
+});
+
 const userRegisterValidations = [
   _nameRequired,
   _telephoneRequired,
@@ -58,4 +67,5 @@ const userRegisterValidations = [
 module.exports = {
   validationResult: validResult,
   userRegisterValidations,
+  imageRequired,
 };

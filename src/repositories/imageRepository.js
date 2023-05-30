@@ -30,6 +30,24 @@ class ImageRepository {
       });
     });
   }
+
+  deleteImage(Key) {
+    Key = Key.split("/")[3].replace(/ /g, "_");
+    return new Promise((resolve, reject) => {
+      const params = {
+        Bucket: config.aws.s3BucketName,
+        Key,
+      };
+      console.log(params);
+      this.s3.deleteObject(params, (err, data) => {
+        if (err) {
+          reject(new AppError(err.message, 502));
+        }
+        console.log(JSON.stringify(data));
+        resolve(true);
+      });
+    });
+  }
 }
 
 module.exports = ImageRepository;

@@ -1,7 +1,9 @@
 const { check } = require("express-validator");
+const multer = require("multer");
+const upload = multer();
 const AppError = require("../../errors/appError");
 const restaurantService = require("../../services/restaurantService");
-const { validationResult } = require("../common");
+const { validationResult, imageRequired } = require("../common");
 const { ADMIN_ROLE } = require("../../constants/index");
 const { validJWT, hasRole } = require("../auth");
 
@@ -11,17 +13,17 @@ const _capacityRequired = check("capacity", "Capacity required")
   .isEmpty();
 const _rifRequired = check("rif", "RIF required").not().isEmpty();
 const _addressRequired = check("address", "Address required").not().isEmpty();
-const _restExist = check("id").custom(async (id = "1") => {
-  const itemFound = await restaurantService.findById(id);
-  if (itemFound) {
+const _restExist = check("name").custom(async (name) => {
+  const resFound = await restaurantService.findByName(name);
+  if (resFound) {
     throw new AppError("Restaurant listed in DB", 400);
   }
 });
 
 const _idRequired = check("id", "ID is required").not().isEmpty();
 const _idExist = check("id").custom(async (id = "") => {
-  const itemFound = await restaurantService.findById(id);
-  if (!itemFound) {
+  const resFound = await restaurantService.findById(id);
+  if (!resFound) {
     throw new AppError("The ID does not exist in DB", 400);
   }
 });
@@ -34,6 +36,16 @@ const postRequestValidations = [
   _rifRequired,
   _addressRequired,
   _restExist,
+  validationResult,
+];
+
+const postImageRequestValidations = [
+  validJWT,
+  hasRole(ADMIN_ROLE),
+  upload.single("image"),
+  _idRequired,
+  _idExist,
+  imageRequired,
   validationResult,
 ];
 
@@ -65,6 +77,7 @@ const getAllRequestValidations = [validJWT, hasRole(ADMIN_ROLE)];
 
 module.exports = {
   postRequestValidations,
+  postImageRequestValidations,
   putRequestValidations,
   getRequestByIdValidations,
   deleteRequestValidations,

@@ -1,5 +1,7 @@
 const MenuRepository = require("../repositories/menuRepository");
 const repository = new MenuRepository();
+const ImageRepository = require("../repositories/imageRepository");
+const imageRepository = new ImageRepository();
 
 const findAll = async () => {
   return await repository.findAll();
@@ -22,6 +24,10 @@ const update = async (id, menu) => {
 };
 
 const remove = async (id) => {
+  const menu = await repository.findById(id);
+  if (menu.image) {
+    imageRepository.deleteImage(menu.image);
+  }
   return await repository.remove(id);
 };
 

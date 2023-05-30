@@ -6,14 +6,17 @@ const {
   getById,
   createRestaurant,
   updateRestaurant,
+  deleteRestaurant,
   uploadResLogo,
 } = require("../controllers/restaurant");
 
 const {
   postRequestValidations,
+  postImageRequestValidations,
   putRequestValidations,
   getRequestByIdValidations,
   getAllRequestValidations,
+  deleteRequestValidations,
 } = require("../middlewares/restaurant");
 
 const router = Router();
@@ -22,6 +25,7 @@ router.get("/", getAllRequestValidations, findAll);
 router.get("/:id(\\d+)/", getRequestByIdValidations, getById);
 router.post("/", postRequestValidations, createRestaurant);
 router.put("/:id(\\d+)/", putRequestValidations, updateRestaurant);
-router.post("/logo", upload.single("logo"), uploadResLogo);
+router.delete("/:id(\\d+)/", deleteRequestValidations, deleteRestaurant);
+router.post("/logo", postImageRequestValidations, uploadResLogo);
 
 module.exports = router;

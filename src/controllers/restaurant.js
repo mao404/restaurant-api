@@ -49,6 +49,16 @@ const updateRestaurant = async (req, res, next) => {
   }
 };
 
+const deleteRestaurant = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const restaurant = await restaurantService.remove(id);
+    res.json(new Success(restaurant));
+  } catch (err) {
+    next(err);
+  }
+};
+
 const uploadResLogo = async (req, res, next) => {
   try {
     const menuId = req.body.id;
@@ -67,5 +77,6 @@ module.exports = {
   getById,
   createRestaurant,
   updateRestaurant,
+  deleteRestaurant,
   uploadResLogo,
 };
