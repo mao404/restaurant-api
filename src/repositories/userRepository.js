@@ -35,6 +35,7 @@ class UserRepository {
         "telephone",
         "role",
         "enable",
+        "lastLogin",
       ],
       include: [
         {
@@ -60,6 +61,7 @@ class UserRepository {
         "telephone",
         "role",
         "enable",
+        "lastLogin",
       ],
     };
 

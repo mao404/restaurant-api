@@ -38,6 +38,10 @@ const User = sequelize.define("User", {
     allowNull: false,
     defaultValue: true,
   },
+  lastLogin: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
   createdAt: {
     type: "TIMESTAMP",
     defaultValue: DataTypes.NOW,

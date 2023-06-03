@@ -33,6 +33,13 @@ const login = async (email, password) => {
     //Generate JWT
     const token = _encrypt(user.id);
 
+    //Generate the Login date
+    const date = new Date();
+    let userLoginUpdate = {
+      lastLogin: date,
+    };
+    const lastLogin = await userService.update(user.id, userLoginUpdate);
+
     return {
       token,
       name: user.name,
