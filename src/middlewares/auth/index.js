@@ -1,4 +1,5 @@
 const { check } = require("express-validator");
+const AppError = require("../../errors/appError");
 const { validationResult, userRegisterValidations } = require("../common");
 const { validToken, validRole } = require("../../services/authService");
 
@@ -30,6 +31,14 @@ const hasRole = (...roles) => {
   };
 };
 
+const _rolePresent = check("role")
+  .optional()
+  .custom(async (role = "") => {
+    if (role) {
+      throw new AppError("Invalid role parameter", 400);
+    }
+  });
+
 const postLoginRequestValidations = [
   _emailRequired,
   _emailValid,
@@ -39,6 +48,7 @@ const postLoginRequestValidations = [
 
 const postRegisterRequestValidations = [
   userRegisterValidations,
+  _rolePresent,
   validationResult,
 ];
 

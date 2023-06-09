@@ -1,17 +1,17 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "API Rest base repo.",
-    "description": "## This is a base api to start new projects.",
-    "version": "0.0.1",
+    "title": "API Rest for restaurant.",
+    "description": "## This is an api for restaurant orders administration.",
+    "version": "1.0.0",
     "contact": {
-      "email": ""
+      "email": "maopadron25@gmail.com"
     }
   },
 
   "servers": [
     {
-      "url": "https://localhost:3000/api/v1",
+      "url": "http://localhost:3000/api/v1",
       "description": "Development"
     },
     {
@@ -21,16 +21,94 @@
   ],
   "tags": [
     {
-      "name": "users",
+      "name": "Login & Register",
+      "description": "Login to the API or register as a new user"
+    },
+    {
+      "name": "Users",
       "description": "Operations about users."
+    },
+    {
+      "name": "Menu",
+      "description": "Operations about menu"
+    },
+    {
+      "name": "Orders",
+      "description": "Operations about orders"
+    },
+    {
+      "name": "Restaurant",
+      "description": "Operations about restaurant routes"
+    },
+    {
+      "name": "Inventory",
+      "description": "Operations about inventory"
     }
   ],
   "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Login & Register"],
+        "summary": "Login to the API",
+        "description": "## Route for user authentication to be able to use the API.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "swagger@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User authenticated"
+          },
+          "401": {
+            "description": "Authentication failed Email or Password is incorrect."
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["Login & Register"],
+        "summary": "Register user to the database",
+        "description": "## Route to register a new account as a guest user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created and can login now"
+          },
+          "400": {
+            "description": "User already exist in the database."
+          }
+        }
+      }
+    },
     "/users/": {
       "get": {
-        "tags": ["users"],
-        "summary": "Get a list of all existing users.",
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Get a list of all existing users with filters.",
+        "description": "## Get a list of the users based on the filters, if there is no filter it will fetch all the users",
         "responses": {
           "200": {
             "description": "The array of users in JSON format.",
@@ -45,12 +123,42 @@
               }
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "filter[name]",
+            "in": "query",
+            "description": "The name of the user to be fetched",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[email]",
+            "in": "query",
+            "description": "The email of the user to be fetched",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter[idNumber]",
+            "in": "query",
+            "description": "The identification number of the user to be fetched",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "options[order]",
+            "in": "query",
+            "description": "The order of the query, it has two parameters, the first one is the filter (name, idNumber, email, createdAt, etc) as for the second it is the order, and only accepts two values DESC (Descending) or ASC (Ascending), example: createdAt;DESC. **It has to be separated with semi colon ';'**",
+            "required": false,
+            "type": "string"
+          }
+        ]
       },
       "post": {
-        "tags": ["users"],
+        "tags": ["Users"],
         "summary": "Create a new user.",
-        "description": "",
+        "description": "## Can create users with certain roles to use the API. Needs to be logged on and have ADMIN role",
         "requestBody": {
           "content": {
             "application/json": {
@@ -69,9 +177,9 @@
     },
     "/users/{id}": {
       "put": {
-        "tags": ["users"],
+        "tags": ["Users"],
         "summary": "Update an existing user by providing the id.",
-        "description": "",
+        "description": "## Update the user info.",
         "parameters": [
           {
             "name": "id",
@@ -107,9 +215,9 @@
         }
       },
       "delete": {
-        "tags": ["users"],
+        "tags": ["Users"],
         "summary": "Delete an existing user by providing the id.",
-        "description": "",
+        "description": "## Delete an user from the database",
         "parameters": [
           {
             "name": "id",
@@ -127,26 +235,757 @@
           }
         }
       }
-    }
-  },
-  "components": {
-    "schemas": {
-      "User": {
-        "required": ["id"],
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "The user id.",
-            "type": "integer",
-            "example": "3"
+    },
+    "/menu": {
+      "get": {
+        "tags": ["Menu"],
+        "summary": "Get a list of all the menus of the restaurant.",
+        "description": "## Get the list of all the menu items available in the restaurant",
+        "responses": {
+          "200": {
+            "description": "The array of menus in JSON format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Menu"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Menu"],
+        "summary": "Create a new menu.",
+        "description": "## Creates a new menu or dish for the restaurant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Menu"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Menu created."
           },
-          "name": {
-            "description": "The user name.",
-            "type": "string",
-            "example": "Enzo Fernandez"
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/menu/{id}": {
+      "get": {
+        "tags": ["Menu"],
+        "summary": "Get a menu by ID.",
+        "description": "## Get a specific menu by providing the ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the menu to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Menu fetched."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Menu"],
+        "summary": "Update an existing menu by ID.",
+        "description": "## Updates the information of menu by providing the ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the menu to be updated.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Menu updated."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Menu"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Menu"],
+        "summary": "Delete an existing menu by providing the id.",
+        "description": "## Deletes the menu from the database",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the menu that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Menu deleted."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/order": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get a list of all the orders of the restaurant.",
+        "description": "## Gets a list of the orders made in the restaurant",
+        "responses": {
+          "200": {
+            "description": "The array of orders in JSON format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Create a new order.",
+        "description": "## Creates a new order",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orders": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "quantity": {
+                          "type": "integer",
+                          "example": "1"
+                        },
+                        "MenuId": {
+                          "type": "integer",
+                          "example": "2"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "example": "No lettuce"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get an order by ID.",
+        "description": "## Get a specific order by providing the ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the order to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order fetched."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Orders"],
+        "summary": "Update an existing order by ID.",
+        "description": "## Updates the order by providing the ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the order to be updated.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Order updated."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orders": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "quantity": {
+                          "type": "integer",
+                          "example": "1"
+                        },
+                        "MenuId": {
+                          "type": "integer",
+                          "example": "2"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "example": "No lettuce"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Orders"],
+        "summary": "Delete an existing order by providing the id.",
+        "description": "## Deletes the order",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the order that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order deleted."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/restaurant": {
+      "get": {
+        "tags": ["Restaurant"],
+        "summary": "Get a list of the restaurant information.",
+        "description": "## Get the list of the restaurant information",
+        "responses": {
+          "200": {
+            "description": "The array of restaurant in JSON format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Restaurant"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Restaurant"],
+        "summary": "Create a new restaurant.",
+        "description": "## This creates a new restaurant information, used for the invoice",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "The burguer Shack 101"
+                  },
+                  "capacity": {
+                    "type": "integer",
+                    "example": "19"
+                  },
+                  "rif": {
+                    "type": "string",
+                    "example": "36895-4"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Street 12, block 1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Restaurant created."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/restaurant/{id}": {
+      "put": {
+        "tags": ["Restaurant"],
+        "summary": "Update an existing restaurant by ID.",
+        "description": "## Updates the information of the restaurant",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the restaurant to be updated.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "The burguer Shack 101"
+                  },
+                  "capacity": {
+                    "type": "integer",
+                    "example": "19"
+                  },
+                  "rif": {
+                    "type": "string",
+                    "example": "36895-4"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Street 12, block 1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Restaurant updated."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Restaurant"],
+        "summary": "Delete an existing restaurant by providing the id.",
+        "description": "## Deletes the restaurant from the database",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the restaurant that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Restaurant deleted."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/inventory": {
+      "get": {
+        "tags": ["Inventory"],
+        "summary": "Get a list of all the inventory.",
+        "description": "## Get the list of all the items available in the restaurant",
+        "responses": {
+          "200": {
+            "description": "The array of inventory in JSON format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inventory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Inventory"],
+        "summary": "Create a new inventory item.",
+        "description": "## Creates a new item what will be part of the restaurant inventory",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Coca-cola 2 liters"
+                  },
+                  "unitType": {
+                    "type": "string",
+                    "example": "unit"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "example": "14"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Item created."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      }
+    },
+    "/inventory/{id}": {
+      "put": {
+        "tags": ["Inventory"],
+        "summary": "Update an existing item by ID.",
+        "description": "## Updates the information of a specific item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the item to be updated.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Coca-cola 2 liters"
+                  },
+                  "unitType": {
+                    "type": "string",
+                    "example": "unit"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "example": "14"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Item updated."
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Inventory"],
+        "summary": "Delete an existing item by providing the id.",
+        "description": "## Deletes the item from the database",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the item that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item deleted."
+          },
+          "401": {
+            "description": "Authentication failed"
           }
         }
       }
     }
-  }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "required": [
+          "id",
+          "name",
+          "idNumber",
+          "email",
+          "telephone",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The user name.",
+            "type": "string",
+            "example": "Enzo Fernandez"
+          },
+          "idNumber": {
+            "description": "User identification number.",
+            "type": "integer",
+            "example": "45568751"
+          },
+          "email": {
+            "description": "The user email address.",
+            "type": "string",
+            "example": "contact@admin.com"
+          },
+          "telephone": {
+            "description": "The user telephone number.",
+            "type": "integer",
+            "example": "418689513"
+          },
+          "password": {
+            "description": "The user password.",
+            "type": "string",
+            "example": "Hpassword124."
+          }
+        }
+      },
+      "Menu": {
+        "required": ["title", "description", "price"],
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "The title of the item in the menu",
+            "type": "string",
+            "example": "Pizza"
+          },
+          "description": {
+            "description": "Brief description of the ingredients.",
+            "type": "string",
+            "example": "Mozzarella Cheese, Napolitan tomato sauce, Pepperoni"
+          },
+          "price": {
+            "description": "Price of the item.",
+            "type": "integer",
+            "example": "3"
+          },
+          "image": {
+            "description": "URL image of the item stored in AWS.",
+            "type": "string"
+          }
+        }
+      },
+      "Restaurant": {
+        "required": ["id", "name", "capacity", "rif", "address"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The id of the restaurant.",
+            "type": "integer",
+            "example": "1"
+          },
+          "name": {
+            "description": "Name of the restaurant or the place.",
+            "type": "string",
+            "example": "Pizza Hut"
+          },
+          "capacity": {
+            "description": "Capacity in seats of the restaurant.",
+            "type": "integer",
+            "example": "29"
+          },
+          "logo": {
+            "description": "URL of the logo stored in AWS.",
+            "type": "string"
+          },
+          "rif": {
+            "description": "Fiscal number of the restaurant bussiness.",
+            "type": "integer",
+            "example": "36895-4"
+          },
+          "address": {
+            "description": "Address of the restaurant.",
+            "type": "string"
+          }
+        }
+      },
+      "Order": {
+        "required": ["id"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The id of the order.",
+            "type": "integer",
+            "example": "12"
+          },
+          "totalPrice": {
+            "description": "The total price of the order.",
+            "type": "integer",
+            "example": "17"
+          }
+        }
+      },
+      "Order Menu": {
+        "required": ["menuId", "orderId", "quantity"],
+        "type": "object",
+        "properties": {
+          "menuId": {
+            "description": "Foreign Key of the Menu ID",
+            "type": "integer",
+            "example:": "4"
+          },
+          "orderId": {
+            "description": "Foreign Key of the Order ID",
+            "type": "integer",
+            "example": "526"
+          },
+          "quantity": {
+            "description": "Ammount or quantity of the menu item",
+            "type": "integer",
+            "example": "2"
+          },
+          "comment": {
+            "description": "Brief description in case the order needs extra ingredient or without it",
+            "type": "string",
+            "example": "The pizza without Anchovy"
+          }
+        }
+      },
+      "Inventory": {
+        "required": ["id", "title", "unitType", "quantity"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The Item ID",
+            "type": "string",
+            "example": "2"
+          },
+          "title": {
+            "description": "Title or name of the item in stock",
+            "type": "string",
+            "example": "Coca-cola 2 liters"
+          },
+          "unitType": {
+            "description": "Type of unit of the item, it's an ENUM of ['kg', 'gr', 'lt', 'ml', 'unit']",
+            "type": "string",
+            "enum": ["kg, gr, lt, ml, unit"],
+            "example": "unit"
+          },
+          "quantity": {
+            "description": "Ammount or quantity available in stock",
+            "type": "integer",
+            "example": "20"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }
