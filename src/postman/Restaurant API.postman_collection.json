@@ -1,0 +1,3860 @@
+{
+  "info": {
+    "_postman_id": "0cdc952a-a45d-47c7-905e-60b3f96cfe78",
+    "name": "Restaurant API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "Login - Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 500\", function () {\r",
+                  "    pm.response.to.not.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    console.log(jsonData)\r",
+                  "    pm.expect(jsonData).to.have.property('data')\r",
+                  "    pm.expect(jsonData.data).to.have.property('token')\r",
+                  "    pm.expect(jsonData.data.token).to.be.an('string')\r",
+                  "    pm.expect(jsonData.data).to.have.property('name')\r",
+                  "    pm.expect(jsonData.data).to.have.property('role')\r",
+                  "\r",
+                  "    pm.collectionVariables.set(\"token\", jsonData.data.token);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"luispadron25@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basepath}}/auth/login",
+              "host": ["{{basepath}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Failure - Invalid credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 200\", function () {\r",
+                  "    pm.response.to.not.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('error')\r",
+                  "    pm.expect(jsonData.error).to.have.property('message')\r",
+                  "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"notindatabase@aaa.com\",\r\n    \"password\": \"12345\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basepath}}/auth/login",
+              "host": ["{{basepath}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Invalid request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 200\", function () {\r",
+                  "    pm.response.to.not.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('error')\r",
+                  "    pm.expect(jsonData.error).to.have.property('message')\r",
+                  "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                  "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                  "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"isnotanemail\",\r\n    \"password\": \"12345\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basepath}}/auth/login",
+              "host": ["{{basepath}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Register",
+      "item": [
+        {
+          "name": "Register - Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 500\", function () {\r",
+                  "    pm.response.to.not.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('data')\r",
+                  "\r",
+                  "    pm.collectionVariables.set(\"userId\", jsonData.data.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.collectionVariables.set(\"randomNumber\", Math.random());"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Usuario de test unitario\",\r\n    \"idNumber\": {{randomNumber}},\r\n    \"telephone\": 6121212,\r\n    \"email\": \"{{randomNumber}}@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basepath}}/auth/register",
+              "host": ["{{basepath}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register - Failure",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 500\", function () {\r",
+                  "    pm.response.to.not.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('error')\r",
+                  "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                  "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                  "\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Usuario de test unitario\",\r\n    \"idNumber\": 20202020,\r\n    \"telephone\": 6121212,\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basepath}}/auth/register",
+              "host": ["{{basepath}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "item": [
+            {
+              "name": "Get Users by filter - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/?options[order]=createdAt;DESC",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ""],
+                  "query": [
+                    {
+                      "key": "filter[name]",
+                      "value": "luis",
+                      "disabled": true
+                    },
+                    {
+                      "key": "filter[email]",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "filter[idNumber]",
+                      "value": "1126710133",
+                      "disabled": true
+                    },
+                    {
+                      "key": "options[limit]",
+                      "value": "2",
+                      "disabled": true
+                    },
+                    {
+                      "key": "options[order]",
+                      "value": "createdAt;DESC"
+                    },
+                    {
+                      "key": "options[offset]",
+                      "value": null,
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Users by filter - Without Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () {\r",
+                      "    pm.response.to.have.status(401);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ""],
+                  "query": [
+                    {
+                      "key": "filter[name]",
+                      "value": "luis",
+                      "disabled": true
+                    },
+                    {
+                      "key": "filter[email]",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "filter[idNumber]",
+                      "value": "1126710133",
+                      "disabled": true
+                    },
+                    {
+                      "key": "options[limit]",
+                      "value": "2",
+                      "disabled": true
+                    },
+                    {
+                      "key": "options[order]",
+                      "value": "createdAt;DESC",
+                      "disabled": true
+                    },
+                    {
+                      "key": "options[offset]",
+                      "value": null,
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Get User by ID",
+          "item": [
+            {
+              "name": "Get Users by ID - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "7"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Users by ID - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "777"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create User",
+          "item": [
+            {
+              "name": "Create User - Success",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.collectionVariables.set(\"randomNumber\", Math.random());"
+                    ],
+                    "type": "text/javascript"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.have.property('id')\r",
+                      "    pm.expect(jsonData.data.id).to.be.an('number')\r",
+                      "    pm.expect(jsonData.data).to.have.property('idNumber')\r",
+                      "    pm.expect(jsonData.data).to.have.property('email')\r",
+                      "\r",
+                      "    pm.collectionVariables.set(\"userId\", jsonData.data.id);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Usuario de test unitario\",\r\n    \"idNumber\": {{randomNumber}},\r\n    \"telephone\": 6121212,\r\n    \"email\": \"{{randomNumber}}@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create User - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Usuario de test unitario\",\r\n    \"idNumber\": 20202020,\r\n    \"telephone\": 6121212,\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update User",
+          "item": [
+            {
+              "name": "Update User - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Admin 5 actualizado con\",\r\n    \"password\": \"Contrasñamipalo1\",\r\n    \"role\": \"USER_ROLE\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "8"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Admin 5 actualizado con\",\r\n    \"password\": \"Contrasñamipalo1\",\r\n    \"role\": \"USER_ROLE\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "8888"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete User",
+          "item": [
+            {
+              "name": "Delete User - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{userId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete User - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "124444444"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Inventory",
+      "item": [
+        {
+          "name": "Get All Inventory",
+          "item": [
+            {
+              "name": "Get All Inventory - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/inventory/",
+                  "host": ["{{basepath}}"],
+                  "path": ["inventory", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Inventory - Without Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () {\r",
+                      "    pm.response.to.have.status(401);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/inventory/",
+                  "host": ["{{basepath}}"],
+                  "path": ["inventory", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Inventory",
+          "item": [
+            {
+              "name": "Create Inventory - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.have.property('id')\r",
+                      "    pm.expect(jsonData.data.id).to.be.an('number')\r",
+                      "    pm.expect(jsonData.data).to.have.property('title')\r",
+                      "    pm.expect(jsonData.data).to.have.property('quantity')\r",
+                      "\r",
+                      "    pm.collectionVariables.set(\"inventoryId\", jsonData.data.id);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.collectionVariables.set(\"randomNumber\", Math.random());"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"Arroz {{randomNumber}}\",\r\n    \"unitType\": \"unit\",\r\n    \"quantity\": 15\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/inventory/",
+                  "host": ["{{basepath}}"],
+                  "path": ["inventory", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Inventory - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"Lechuga\",\r\n    \"unitType\": \"unit\",\r\n    \"quantity\": 15\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/inventory/",
+                  "host": ["{{basepath}}"],
+                  "path": ["inventory", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Inventory",
+          "item": [
+            {
+              "name": "Update Inventory - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"quantity\": 4\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/inventory/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["inventory", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Inventory - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"quantity\": 4\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/inventory/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["inventory", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "8888"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Inventory",
+          "item": [
+            {
+              "name": "Delete Inventory - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/inventory/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["inventory", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{inventoryId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Inventory - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/users/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "124444444"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Menu",
+      "item": [
+        {
+          "name": "Get All Menu",
+          "item": [
+            {
+              "name": "Get All Menu - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ""],
+                  "query": [
+                    {
+                      "key": "filter[name]",
+                      "value": "Luis",
+                      "disabled": true
+                    },
+                    {
+                      "key": "options[limit]",
+                      "value": "2",
+                      "disabled": true
+                    },
+                    {
+                      "key": "options[offset]",
+                      "value": "0",
+                      "disabled": true
+                    },
+                    {
+                      "key": "filter[email]",
+                      "value": "luis@gonzalez.com",
+                      "disabled": true
+                    },
+                    {
+                      "key": "filter[lastname]",
+                      "value": "Gonzalez",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Menu - Without Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () {\r",
+                      "    pm.response.to.have.status(401);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Get Menu by ID",
+          "item": [
+            {
+              "name": "Get Menu by ID - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Menu by ID - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "777"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Menu",
+          "item": [
+            {
+              "name": "Create Menu - Success",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.collectionVariables.set(\"randomNumber\", Math.random());"
+                    ],
+                    "type": "text/javascript"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.have.property('id')\r",
+                      "    pm.expect(jsonData.data.id).to.be.an('number')\r",
+                      "    pm.expect(jsonData.data).to.have.property('title')\r",
+                      "    pm.expect(jsonData.data).to.have.property('price')\r",
+                      "\r",
+                      "    pm.collectionVariables.set(\"menuId\", jsonData.data.id);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"Shawarma {{randomNumber}}\",\r\n    \"description\": \"Shawarma grande con salsas especiales de la casa\",\r\n    \"price\": 8\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Menu- Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"Pizza\",\r\n    \"description\": \"Pizza test\",\r\n    \"price\": 8\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Menu",
+          "item": [
+            {
+              "name": "Update Menu - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"price\": 12\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "4"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Menu - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"price\": 12\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "8888"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Menu",
+          "item": [
+            {
+              "name": "Delete Menu - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{menuId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Menu - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/menu/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["menu", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "124444444"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Restaurant",
+      "item": [
+        {
+          "name": "Get All Restaurant",
+          "item": [
+            {
+              "name": "Get All Restaurant - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Restaurant - Without Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () {\r",
+                      "    pm.response.to.have.status(401);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Restaurant",
+          "item": [
+            {
+              "name": "Create Restaurant - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.have.property('id')\r",
+                      "    pm.expect(jsonData.data.id).to.be.an('number')\r",
+                      "    pm.expect(jsonData.data).to.have.property('name')\r",
+                      "    pm.expect(jsonData.data).to.have.property('address')\r",
+                      "\r",
+                      "    pm.collectionVariables.set(\"resId\", jsonData.data.id);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"The Valencia burguer\",\r\n    \"capacity\": 27,\r\n    \"rif\": \"146895-5\",\r\n    \"address\": \"Don Julio Centeno\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Resutaraunt - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"The hat burguer 3123\",\r\n    \"capacity\": 27,\r\n    \"rif\": \"146895-5\",\r\n    \"address\": \"Don Julio Centeno\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Restaurant",
+          "item": [
+            {
+              "name": "Update Restaurant - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"rif\": \"146895-3\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Restaurant - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"price\": 12\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "8888"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Restaurant",
+          "item": [
+            {
+              "name": "Delete Restaurant - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{resId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Restaurant - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/restaurant/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["restaurant", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "124444444"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "Get All Orders",
+          "item": [
+            {
+              "name": "Get All Order - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Order - Without Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () {\r",
+                      "    pm.response.to.have.status(401);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Get Order by ID",
+          "item": [
+            {
+              "name": "Get Order by ID - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    console.log(jsonData)\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data.Menus).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "106"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Order by ID - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "777"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Order",
+          "item": [
+            {
+              "name": "Create Order bulk - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "    pm.expect(jsonData.data[0]).to.have.property('OrderId')\r",
+                      "    pm.expect(jsonData.data[0].OrderId).to.be.an('number')\r",
+                      "    pm.expect(jsonData.data[0]).to.have.property('quantity')\r",
+                      "    pm.expect(jsonData.data[0]).to.have.property('MenuId')\r",
+                      "\r",
+                      "    pm.collectionVariables.set(\"orderId\", jsonData.data[0].OrderId);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"totalPrice\": 23,\r\n    \"orders\": [\r\n        {\r\n            \"quantity\": 1,\r\n            \"MenuId\": 1,\r\n            \"comment\": \"Asdfg\"\r\n        },\r\n        {\r\n            \"quantity\": 1,\r\n            \"MenuId\": 4,\r\n            \"comment\": \"222222\"\r\n        }\r\n    ]\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Order bulk - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"totalPrice\": 23,\r\n    \"orders\": [\r\n        {\r\n            \"quantity\": \"Un string para validar\",\r\n            \"MenuId\": \"Menu ID en string\",\r\n            \"comment\": 13124\r\n        },\r\n        {\r\n            \"quantity\": 1,\r\n            \"MenuId\": 1,\r\n            \"comment\": \"Prueba test unitario\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Order",
+          "item": [
+            {
+              "name": "Update Order - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"orders\": [\r\n        {\r\n            \"quantity\": 1,\r\n            \"MenuId\": 2,\r\n            \"comment\": \"Test update bulkcreate update\"\r\n        },\r\n        {\r\n            \"quantity\": 2,\r\n            \"MenuId\": 1,\r\n            \"comment\": \"Test update BC 2\"\r\n        },\r\n        {\r\n            \"quantity\": 2,\r\n            \"MenuId\": 4,\r\n            \"comment\": \"Pizza con extra de pepperoni\"\r\n        },\r\n        {\r\n            \"quantity\": 1,\r\n            \"MenuId\": 7,\r\n            \"comment\": \"Shawarma con salsa de la casa 2323\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{orderId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Order - Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"orders\": [\r\n        {\r\n            \"quantity\": 1,\r\n            \"MenuId\": 2,\r\n            \"comment\": \"Test update bulkcreate update\"\r\n        },\r\n        {\r\n            \"quantity\": 2,\r\n            \"MenuId\": 1,\r\n            \"comment\": \"Test update BC 2\"\r\n        },\r\n        {\r\n            \"quantity\": 2,\r\n            \"MenuId\": 4,\r\n            \"comment\": \"Pizza con extra de pepperoni\"\r\n        },\r\n        {\r\n            \"quantity\": 1,\r\n            \"MenuId\": 7,\r\n            \"comment\": \"Shawarma con salsa de la casa 2222\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "77777"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete Order",
+          "item": [
+            {
+              "name": "Delete Order - Success",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('data')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{orderId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Order- Failure",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Status code is NOT 500\", function () {\r",
+                      "    pm.response.to.not.have.status(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 500ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is a JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has correct properties\", function () {\r",
+                      "    var jsonData = pm.response.json()\r",
+                      "    pm.expect(jsonData).to.have.property('error')\r",
+                      "    pm.expect(jsonData.error).to.have.property('message')\r",
+                      "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                      "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                      "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{token}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{basepath}}/order/:id",
+                  "host": ["{{basepath}}"],
+                  "path": ["order", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "124444444"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Image",
+      "item": [
+        {
+          "name": "Upload Menu Image - Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 500\", function () {\r",
+                  "    pm.response.to.not.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 750ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(750);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('data')\r",
+                  "    pm.expect(jsonData.data).to.be.an('array')\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "default"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/Luis/Pictures/Saved Pictures/GetAway.png"
+                },
+                {
+                  "key": "id",
+                  "value": "1",
+                  "type": "default"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basepath}}/menu/image",
+              "host": ["{{basepath}}"],
+              "path": ["menu", "image"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Menu Image - Failure",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 500\", function () {\r",
+                  "    pm.response.to.not.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 750ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(750);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('error')\r",
+                  "    pm.expect(jsonData.error).to.have.property('message')\r",
+                  "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                  "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                  "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "default"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/Luis/Pictures/Sticker/7.png",
+                  "disabled": true
+                },
+                {
+                  "key": "id",
+                  "value": "1",
+                  "type": "default",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basepath}}/menu/image",
+              "host": ["{{basepath}}"],
+              "path": ["menu", "image"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Restaurant Logo - Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 500\", function () {\r",
+                  "    pm.response.to.not.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 750ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(750);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('data')\r",
+                  "    pm.expect(jsonData.data).to.be.an('array')\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "default"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/Luis/Pictures/Saved Pictures/GetAway.png"
+                },
+                {
+                  "key": "id",
+                  "value": "2",
+                  "type": "default"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basepath}}/restaurant/logo",
+              "host": ["{{basepath}}"],
+              "path": ["restaurant", "logo"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Restaurant Logo - Failure",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Status code is NOT 500\", function () {\r",
+                  "    pm.response.to.not.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 750ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(750);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is a JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has correct properties\", function () {\r",
+                  "    var jsonData = pm.response.json()\r",
+                  "    pm.expect(jsonData).to.have.property('error')\r",
+                  "    pm.expect(jsonData.error).to.have.property('message')\r",
+                  "    pm.expect(jsonData.error.message).to.be.an('string')\r",
+                  "    pm.expect(jsonData.error).to.have.property('detail')\r",
+                  "    pm.expect(jsonData.error.detail).to.be.an('array')\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}",
+                "type": "default"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/Luis/Pictures/Sticker/7.png",
+                  "disabled": true
+                },
+                {
+                  "key": "id",
+                  "value": "18468",
+                  "type": "default"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basepath}}/restaurant/logo",
+              "host": ["{{basepath}}"],
+              "path": ["restaurant", "logo"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "randomNumber",
+      "value": ""
+    },
+    {
+      "key": "inventoryId",
+      "value": ""
+    },
+    {
+      "key": "menuId",
+      "value": ""
+    },
+    {
+      "key": "resId",
+      "value": ""
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    }
+  ]
+}

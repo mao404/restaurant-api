@@ -62,6 +62,8 @@ const validToken = async (token) => {
     // Validate the token comes from the server
     let id;
     try {
+      // Remove Bearer from string
+      token = token.replace(/^Bearer\s+/, "");
       const obj = jwt.verify(token, config.auth.secret);
       id = obj.id;
     } catch (verifyError) {

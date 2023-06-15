@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const config = require("../../config");
 const logger = require("../logger");
@@ -17,6 +18,7 @@ class ExpressServer {
 
     this._middlewares();
     this._swaggerConfig();
+    this._cors();
 
     this._routes();
 
@@ -70,6 +72,10 @@ class ExpressServer {
       };
       res.status(code).json(body);
     });
+  }
+
+  _cors() {
+    this.app.use(cors());
   }
 
   //Swagger configuration for the documentation in the route imported from config file
