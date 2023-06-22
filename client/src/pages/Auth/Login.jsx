@@ -1,5 +1,6 @@
 import * as React from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -37,6 +38,7 @@ function Copyright(props) {
 export default function SignInSide() {
   const { showBoundary } = useErrorBoundary();
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const [login, setLogin] = useState({
     email: "",
@@ -51,15 +53,11 @@ export default function SignInSide() {
     event.preventDefault();
     try {
       const res = await axios.post(baseApiPath + "/auth/login", login);
-      console.log(res);
+      //document.cookie = `Authorization = Bearer ${res.data.data.token}`;
+      cookies.set("Authorization", res.data.data.token);
     } catch (err) {
       showBoundary(err);
     }
-    /*     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    }); */
   };
 
   return (
@@ -142,7 +140,7 @@ export default function SignInSide() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"No tiene cuenta? Registrese"}
                 </Link>
               </Grid>

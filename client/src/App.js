@@ -10,6 +10,8 @@ import Menus from "./pages/Menus/Menus";
 import AddMenu from "./pages/Menus/AddMenu";
 import Fallback from "./components/Fallback";
 import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/register" element={<Register />}></Route>
             <Route path="/users" element={<Users />}></Route>
             <Route path="/menu" element={<Menus />}></Route>
             <Route path="/menu/add" element={<AddMenu />}></Route>

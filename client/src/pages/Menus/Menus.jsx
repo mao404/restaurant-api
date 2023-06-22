@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import baseApiPath from "../../services/api";
@@ -7,9 +8,16 @@ const Menus = () => {
   const [menus, setMenus] = useState([]);
 
   useEffect(() => {
+    const cookies = new Cookies();
     const fetchAllMenus = async () => {
       try {
-        const res = await axios.get(baseApiPath + "/menu");
+        const res = await axios.get(baseApiPath + "/menu", {
+          headers: {
+            Authorization: cookies.get("Authorization"),
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
         setMenus(res.data.data);
       } catch (err) {
         throw err;

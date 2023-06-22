@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "universal-cookie";
 import React from "react";
 import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
@@ -15,6 +16,7 @@ function AddMenu() {
   });
 
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const handleChange = (e) => {
     setMenu((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -23,7 +25,13 @@ function AddMenu() {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(baseApiPath + "/menu/", menu);
+      await axios.post(baseApiPath + "/menu/", menu, {
+        headers: {
+          Authorization: cookies.get("Authorization"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
       navigate("/");
     } catch (err) {
       console.log(err.response);
