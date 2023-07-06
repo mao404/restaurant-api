@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import baseApiPath from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 
 function AddMenu() {
   const { showBoundary } = useErrorBoundary();
@@ -60,7 +61,7 @@ function AddMenu() {
         name="price"
       />
       {/* <input type="file" placeholder='Imagen' onChange={handleChange} name='image' /> */}
-      <button onClick={handleClick}>Agregar Menú</button>
+      <Button onClick={handleClick}>Agregar Menú</Button>
     </div>
   );
 }

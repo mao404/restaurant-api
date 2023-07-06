@@ -107,7 +107,6 @@ export default function SignInSide() {
               label="Email"
               name="email"
               onChange={handleChange}
-              autoComplete="email"
               autoFocus
             />
             <TextField
@@ -119,7 +118,6 @@ export default function SignInSide() {
               label="Contraseña"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

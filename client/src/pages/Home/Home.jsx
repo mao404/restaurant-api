@@ -5,6 +5,7 @@ import ProductCategories from "../../views/ProductCategories";
 import ProductValues from "../../views/ProductValues";
 import ProductHowItWorks from "../../views/ProductHowItWorks";
 import ProductContactUs from "../../views/ProductContactUs";
+import AppFooter from "../../views/AppFooter";
 
 function Index() {
   return (
@@ -15,6 +16,7 @@ function Index() {
       <ProductCategories />
       <ProductHowItWorks />
       <ProductContactUs />
+      <AppFooter />
     </React.Fragment>
   );
 }
