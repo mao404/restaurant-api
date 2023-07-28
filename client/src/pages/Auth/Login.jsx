@@ -55,6 +55,7 @@ export default function SignInSide() {
       const res = await axios.post(baseApiPath + "/auth/login", login);
       //document.cookie = `Authorization = Bearer ${res.data.data.token}`;
       cookies.set("Authorization", res.data.data.token);
+      navigate("/panel");
     } catch (err) {
       showBoundary(err);
     }
