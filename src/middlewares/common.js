@@ -22,7 +22,7 @@ const _idNumberRequired = check("idNumber", "ID number required")
 
 const _idNumberIsNumber = check(
   "idNumber",
-  "Cedula is not a number"
+  "Cedula is not a number",
 ).isNumeric();
 const _idNumberExist = check("idNumber").custom(async (idNumber = "") => {
   const userFound = await userService.findByIdNumber(idNumber);

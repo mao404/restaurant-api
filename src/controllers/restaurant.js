@@ -65,7 +65,7 @@ const uploadResLogo = async (req, res, next) => {
     const logo = req.file;
 
     res.json(
-      new Success(await imageService.uploadRestaurantLogo(menuId, logo))
+      new Success(await imageService.uploadRestaurantLogo(menuId, logo)),
     );
   } catch (err) {
     next(err);

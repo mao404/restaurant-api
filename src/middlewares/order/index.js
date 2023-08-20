@@ -10,24 +10,24 @@ const _qtyRequired = check("orders.*.quantity", "Quantity is required")
   .isEmpty();
 const _qtyNumeric = check(
   "orders.*.quantity",
-  "Quantity is not a number"
+  "Quantity is not a number",
 ).isNumeric();
 const _menuIdRequired = check("orders.*.quantity", "Menu ID is required")
   .not()
   .isEmpty();
 const _menuIdNumeric = check(
   "orders.*.MenuId",
-  "Menu ID is not a number"
+  "Menu ID is not a number",
 ).isNumeric();
 const _optionalCommentValid = check(
   "orders.*.comment",
-  "Comment is not a string"
+  "Comment is not a string",
 )
   .optional()
   .isString();
 const _optionalTotalPriceValid = check(
   "totalPrice",
-  "Total price is not a number"
+  "Total price is not a number",
 )
   .optional()
   .isNumeric();

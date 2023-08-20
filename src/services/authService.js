@@ -12,7 +12,7 @@ const login = async (email, password) => {
     if (!user) {
       throw new AppError(
         "Authentication failed Email or Password is incorrect",
-        401
+        401,
       );
     }
 
@@ -26,7 +26,7 @@ const login = async (email, password) => {
     if (!validPassword) {
       throw new AppError(
         "Authentication failed Email or Password is incorrect",
-        401
+        401,
       );
     }
 

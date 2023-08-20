@@ -63,7 +63,6 @@ function AddMenu() {
           onChange={handleChange}
           name="price"
         />
-        {/* <input type="file" placeholder='Imagen' onChange={handleChange} name='image' /> */}
         <Button onClick={handleClick}>Agregar Menú</Button>
       </div>
     </>

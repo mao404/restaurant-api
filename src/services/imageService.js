@@ -17,7 +17,7 @@ const uploadMenuImage = async (idMenu, file) => {
   const imageURL = await imageRepository.uploadImage(
     menu.title,
     file.buffer,
-    file.mimetype
+    file.mimetype,
   );
   menu.image = imageURL;
   return await menuRepository.update(idMenu, { image: imageURL });
@@ -34,7 +34,7 @@ const uploadRestaurantLogo = async (idRes, file) => {
   const imageURL = await imageRepository.uploadImage(
     restaurant.name,
     file.buffer,
-    file.mimetype
+    file.mimetype,
   );
   restaurant.logo = imageURL;
   return await restaurantRepository.update(idRes, { logo: imageURL });

@@ -14,6 +14,7 @@ import Register from "./pages/Auth/Register";
 import Home from "./pages/Home/Home";
 import Panel from "./pages/Panel/Panel";
 import UpdateMenu from "./pages/Menus/UpdateMenu";
+import ImageMenu from "./pages/Menus/ImageMenu";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/menu" element={<Menus />}></Route>
             <Route path="/menu/add" element={<AddMenu />}></Route>
             <Route path="/menu/update/:id" element={<UpdateMenu />}></Route>
+            <Route path="/menu/image/:id" element={<ImageMenu />}></Route>
           </Routes>
         </BrowserRouter>
       </div>

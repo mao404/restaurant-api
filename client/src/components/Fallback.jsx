@@ -23,7 +23,7 @@ const Fallback = ({ error }) => {
       }}
     >
       <div role="alert">
-        <img src="https://i.imgflip.com/1rvcgj.jpg" alt="" srcset="" />
+        <img src="https://i.imgflip.com/1rvcgj.jpg" alt="" srcSet="" />
         <h1>Ops :(</h1>
         <h2>
           {errorCode} - {singleError}

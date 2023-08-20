@@ -2,6 +2,8 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import Link from "@mui/material/Link";
 import { useErrorBoundary } from "react-error-boundary";
 import baseApiPath from "../../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -15,7 +17,6 @@ function UpdateMenu() {
     title: "",
     description: "",
     price: null,
-    image: null,
   });
 
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ function UpdateMenu() {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(baseApiPath + "/menu/" + menuId, menu, {
+      await axios.put(baseApiPath + `/menu/${menuId}`, menu, {
         headers: {
           Authorization: cookies.get("Authorization"),
           Accept: "application/json",
@@ -62,7 +63,6 @@ function UpdateMenu() {
       } catch (err) {
         showBoundary(err);
       }
-      //console.log(data);
     }
     fetchData();
   }, [cookies, menuId, showBoundary]);
@@ -93,8 +93,18 @@ function UpdateMenu() {
           onChange={handleChange}
           defaultValue={data.price}
         />
-        {/* <input type="file" placeholder='Imagen' onChange={handleChange} name='image' /> */}
+
         <Button onClick={handleClick}>Actualizar</Button>
+        <Button>
+          <Link
+            underline="none"
+            color="inherit"
+            component={RouterLink}
+            to={`/menu/image/${menuId}`}
+          >
+            Subir Imagen
+          </Link>
+        </Button>
       </div>
     </>
   );
