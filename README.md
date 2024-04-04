@@ -121,3 +121,7 @@ The swagger documentation can be accesed in the route
 ```
 /documentation
 ```
+
+## TODO
+- Pagination
+- Filter
