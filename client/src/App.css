@@ -147,3 +147,16 @@ input {
   object-fit: cover;
   background-color: antiquewhite;
 }
+
+.orders img {
+  width: 200px;
+  height: 400px;
+  object-fit: cover;
+  background-color: antiquewhite;
+}
+
+.modal-img img {
+  width: auto;
+  height: 250px;
+  object-fit: cover;
+}
