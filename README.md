@@ -1,6 +1,6 @@
-# Restaurant API
+## Description
 
-This is an API made to manage restaurant orders.
+This is an API CRUD made to manage restaurant orders, it has unit testing, custom exceptions, api documentation made with swagger, and a logger for valid and invalid API requests.
 
 **The API has:**
 
@@ -11,6 +11,34 @@ This is an API made to manage restaurant orders.
 - Validations
 - User sessions
 - Unit testing
+
+## Structure of project
+
+```
+.
+├── config           # Configuration of the API
+├── constants        # Constants for the middlewares
+├── controllers      # Controllers of the API
+├── errors           # Custom error class
+├── handlers         # Custom success handler
+├── loaders          # Initialization and server config
+     ├──  logger            # Logger config for the valid and invalid API requests
+     ├──  sequelize         # Database configuration
+     ├──  server            # Configuration of express server
+     ├──  swagger           # Swagger API documentation
+├── middlewares      # Validation for routes middlewares
+     ├──  auth              # Auth validation
+     ├──  inventory         # Inventory validation
+     ├──  menu              # Menu validation
+     ├──  order             # Order validation
+     ├──  restaurant        # Restaurant validation
+     ├──  users             # Users validation
+├── models           # Database models
+├── postman          # Postman exported unit testing file
+├── repositories     # Database query logic
+├── routes           # Defined routes for the API
+├── services         # Take data from the controller and transfer to the repository
+```
 
 ## Dependencies installed:
 
@@ -93,3 +121,7 @@ The swagger documentation can be accesed in the route
 ```
 /documentation
 ```
+
+## TODO
+- Pagination
+- Filter
