@@ -123,5 +123,7 @@ The swagger documentation can be accesed in the route
 ```
 
 ## TODO
-- Pagination
-- Filter
+
+- Pagination ✅
+- Filter ✅
+- Refactor axios http requests
