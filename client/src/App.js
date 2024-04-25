@@ -16,6 +16,21 @@ import Panel from "./pages/Panel/Panel";
 import UpdateMenu from "./pages/Menus/UpdateMenu";
 import ImageMenu from "./pages/Menus/ImageMenu";
 import AddOrder from "./pages/Orders/AddOrder";
+import Inventory from "./pages/inventory/Inventory";
+
+const routes = [
+  { path: "/", component: <Home /> },
+  { path: "/login", component: <Login /> },
+  { path: "/register", component: <Register /> },
+  { path: "/panel", component: <Panel /> },
+  { path: "/users", component: <Users /> },
+  { path: "/menu", component: <Menus /> },
+  { path: "/menu/add", component: <AddMenu /> },
+  { path: "/menu/update/:id", component: <UpdateMenu /> },
+  { path: "/menu/image/:id", component: <ImageMenu /> },
+  { path: "/orders", component: <AddOrder /> },
+  { path: "/inventory", component: <Inventory /> },
+];
 
 function App() {
   return (
@@ -23,16 +38,9 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/panel" element={<Panel />}></Route>
-            <Route path="/users" element={<Users />}></Route>
-            <Route path="/menu" element={<Menus />}></Route>
-            <Route path="/menu/add" element={<AddMenu />}></Route>
-            <Route path="/menu/update/:id" element={<UpdateMenu />}></Route>
-            <Route path="/menu/image/:id" element={<ImageMenu />}></Route>
-            <Route path="orders" element={<AddOrder />}></Route>
+            {routes.map((route) => (
+              <Route path={route.path} element={route.component} />
+            ))}
           </Routes>
         </BrowserRouter>
       </div>
