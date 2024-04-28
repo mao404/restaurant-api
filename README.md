@@ -127,3 +127,4 @@ The swagger documentation can be accesed in the route
 - Pagination ✅
 - Filter ✅
 - Refactor axios http requests
+- Forgot password module
