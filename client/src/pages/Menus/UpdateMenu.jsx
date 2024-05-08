@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import { useErrorBoundary } from "react-error-boundary";
-import baseApiPath from "../../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Navbar from "../../components/NavBar";
@@ -34,7 +33,7 @@ function UpdateMenu() {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(baseApiPath + `/menu/${menuId}`, menu, {
+      await axios.put(`/menu/${menuId}`, menu, {
         headers: {
           Authorization: cookies.get("Authorization"),
           Accept: "application/json",
@@ -52,7 +51,7 @@ function UpdateMenu() {
     async function fetchData() {
       try {
         // You can await here
-        const res = await axios.get(baseApiPath + "/menu/" + menuId, {
+        const res = await axios.get("/menu/" + menuId, {
           headers: {
             Authorization: cookies.get("Authorization"),
             Accept: "application/json",

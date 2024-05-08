@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import axios from "axios";
-import baseApiPath from "../../services/api";
 import Navbar from "../../components/NavBar";
 import Button from "../../components/Button";
 import { Box, Grid, Modal } from "@mui/material";
@@ -59,7 +58,7 @@ const AddOrder = () => {
   useEffect(() => {
     const fetchAllMenus = async () => {
       try {
-        const res = await axios.get(baseApiPath + "/menu", {
+        const res = await axios.get("/menu", {
           headers: {
             Authorization: cookies.get("Authorization"),
             Accept: "application/json",

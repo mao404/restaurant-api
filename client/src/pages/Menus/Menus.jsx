@@ -3,7 +3,6 @@ import Cookies from "universal-cookie";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import axios from "axios";
-import baseApiPath from "../../services/api";
 import Navbar from "../../components/NavBar";
 import Button from "../../components/Button";
 import { Box } from "@mui/material";
@@ -15,7 +14,7 @@ const Menus = () => {
   useEffect(() => {
     const fetchAllMenus = async () => {
       try {
-        const res = await axios.get(baseApiPath + "/menu", {
+        const res = await axios.get("/menu", {
           headers: {
             Authorization: cookies.get("Authorization"),
             Accept: "application/json",
@@ -32,7 +31,7 @@ const Menus = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(baseApiPath + "/menu/" + id, {
+      await axios.delete("/menu/" + id, {
         headers: {
           Authorization: cookies.get("Authorization"),
           Accept: "application/json",

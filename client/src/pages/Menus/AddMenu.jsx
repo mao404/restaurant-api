@@ -3,7 +3,6 @@ import Cookies from "universal-cookie";
 import React from "react";
 import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import baseApiPath from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Navbar from "../../components/NavBar";
@@ -27,7 +26,7 @@ function AddMenu() {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(baseApiPath + "/menu/", menu, {
+      await axios.post("/menu/", menu, {
         headers: {
           Authorization: cookies.get("Authorization"),
           Accept: "application/json",

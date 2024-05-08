@@ -13,7 +13,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useErrorBoundary } from "react-error-boundary";
-import baseApiPath from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -52,7 +51,7 @@ export default function SignInSide() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post(baseApiPath + "/auth/login", login);
+      const res = await axios.post("/auth/login", login);
       //document.cookie = `Authorization = Bearer ${res.data.data.token}`;
       cookies.set("Authorization", res.data.data.token);
       navigate("/panel");

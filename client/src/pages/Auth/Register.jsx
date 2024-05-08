@@ -1,7 +1,6 @@
 import * as React from "react";
 import axios from "axios";
 import { useErrorBoundary } from "react-error-boundary";
-import baseApiPath from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
@@ -53,7 +52,7 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(baseApiPath + "/auth/register", user);
+      await axios.post("/auth/register", user);
       navigate("/");
     } catch (err) {
       showBoundary(err);

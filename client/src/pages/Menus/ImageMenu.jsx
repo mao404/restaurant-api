@@ -4,7 +4,6 @@ import LinearProgress from "@mui/material/LinearProgress";
 import React, { useMemo } from "react";
 import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-import baseApiPath from "../../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Navbar from "../../components/NavBar";
@@ -51,7 +50,7 @@ function ImageMenu() {
         return { ...prevState, started: true };
       });
       // api request ...
-      await axios.post(baseApiPath + "/menu/image", formData, {
+      await axios.post("/menu/image", formData, {
         headers: {
           Authorization: cookies.get("Authorization"),
         },
