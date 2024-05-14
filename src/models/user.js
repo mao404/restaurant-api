@@ -57,3 +57,8 @@ const User = sequelize.define("User", {
 module.exports = User;
 
 User.hasOne(require("../models/order"));
+User.hasOne(require("../models/token"), {
+  foreignKey: {
+    unique: true,
+  },
+});

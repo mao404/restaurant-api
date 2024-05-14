@@ -16,7 +16,7 @@ module.exports = async () => {
     logger.info(
       `#################################
         Server listening on port ${config.port}
-        #############################`,
+        #############################`
     );
   } catch (error) {
     logger.info("Unable to connect to the database:", error);
