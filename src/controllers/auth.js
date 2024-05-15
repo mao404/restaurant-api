@@ -22,7 +22,19 @@ const register = async (req = request, res = response, next) => {
   }
 };
 
+const resetPassword = async (req = request, res = response, next) => {
+  const { email } = req.body;
+  try {
+    res
+      .status(201)
+      .json(new Success(await authService.requestPasswordReset(email)));
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   login,
   register,
+  resetPassword,
 };

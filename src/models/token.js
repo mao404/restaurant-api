@@ -29,6 +29,7 @@ module.exports = Token;
 
 Token.belongsTo(require("../models/user"), {
   foreignKey: {
+    name: "UserId",
     unique: true,
   },
 });

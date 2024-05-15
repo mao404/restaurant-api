@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const logger = require("../loaders/logger");
 const userService = require("../services/userService");
+const tokenService = require("../services/tokenService");
 const AppError = require("../errors/appError");
 const config = require("../config/");
 
@@ -9,10 +10,11 @@ const login = async (email, password) => {
   try {
     //Email validation
     const user = await userService.findByEmail(email);
+    console.log(user);
     if (!user) {
       throw new AppError(
         "Authentication failed Email or Password is incorrect",
-        401,
+        401
       );
     }
 
@@ -26,7 +28,7 @@ const login = async (email, password) => {
     if (!validPassword) {
       throw new AppError(
         "Authentication failed Email or Password is incorrect",
-        401,
+        401
       );
     }
 
@@ -38,7 +40,7 @@ const login = async (email, password) => {
     let userLoginUpdate = {
       lastLogin: date,
     };
-    const lastLogin = await userService.update(user.id, userLoginUpdate);
+    await userService.update(user.id, userLoginUpdate);
 
     return {
       token,
@@ -103,6 +105,26 @@ const register = async (user) => {
   return "User registered, you can login now";
 };
 
+const requestPasswordReset = async (email) => {
+  try {
+    const user = await userService.findByEmail(email);
+    if (!user) {
+      throw new AppError("Reset password failed Email is incorrect", 401);
+    }
+    let userToken = await tokenService.findByUserId(user.id);
+    if (userToken) await tokenService.remove(user.id);
+    await tokenService.save(user);
+    const resetToken = await tokenService.findByUserId(user.id);
+
+    return {
+      resetToken,
+      email: user.email,
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
 _encrypt = (id) => {
   return jwt.sign({ id }, config.auth.secret, { expiresIn: config.auth.ttl });
 };
@@ -112,4 +134,5 @@ module.exports = {
   register,
   validToken,
   validRole,
+  requestPasswordReset,
 };
