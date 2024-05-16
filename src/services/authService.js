@@ -105,7 +105,7 @@ const register = async (user) => {
   return "User registered, you can login now";
 };
 
-const requestPasswordReset = async (email) => {
+const requestForgotPassword = async (email) => {
   try {
     const user = await userService.findByEmail(email);
     if (!user) {
@@ -134,5 +134,5 @@ module.exports = {
   register,
   validToken,
   validRole,
-  requestPasswordReset,
+  requestForgotPassword,
 };

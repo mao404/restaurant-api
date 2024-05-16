@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { login, register, resetPassword } = require("../controllers/auth");
+const { login, register, forgotPassword } = require("../controllers/auth");
 const {
   postLoginRequestValidations,
   postRegisterRequestValidations,
@@ -9,6 +9,6 @@ const router = Router();
 
 router.post("/login", postLoginRequestValidations, login);
 router.post("/register", postRegisterRequestValidations, register);
-router.post("/reset-password", resetPassword);
+router.post("/forgot-password", forgotPassword);
 
 module.exports = router;

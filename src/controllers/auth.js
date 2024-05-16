@@ -22,12 +22,12 @@ const register = async (req = request, res = response, next) => {
   }
 };
 
-const resetPassword = async (req = request, res = response, next) => {
+const forgotPassword = async (req = request, res = response, next) => {
   const { email } = req.body;
   try {
     res
       .status(201)
-      .json(new Success(await authService.requestPasswordReset(email)));
+      .json(new Success(await authService.requestForgotPassword(email)));
   } catch (err) {
     next(err);
   }
@@ -36,5 +36,5 @@ const resetPassword = async (req = request, res = response, next) => {
 module.exports = {
   login,
   register,
-  resetPassword,
+  forgotPassword,
 };
