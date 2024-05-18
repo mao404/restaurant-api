@@ -7,9 +7,10 @@ class TokenRepository {
 
   async create(token) {
     token.UserId = token.id;
-    let resetToken = crypto.randomBytes(32).toString("hex");
-    token.token = await bcrypt.hash(resetToken, 10);
-    return await Token.create(token);
+    let cryptoToken = crypto.randomBytes(32).toString("hex");
+    token.token = await bcrypt.hash(cryptoToken, 10);
+    await Token.create(token);
+    return { cryptoToken };
   }
 
   async findByUserId(UserId) {

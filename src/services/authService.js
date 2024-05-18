@@ -113,12 +113,12 @@ const requestForgotPassword = async (email) => {
     }
     let userToken = await tokenService.findByUserId(user.id);
     if (userToken) await tokenService.remove(user.id);
-    await tokenService.save(user);
-    const resetToken = await tokenService.findByUserId(user.id);
+    const { cryptoToken } = await tokenService.save(user);
 
     return {
-      resetToken,
+      cryptoToken,
       email: user.email,
+      url: `/reset-password?token=${cryptoToken}&id=${user.id}`,
     };
   } catch (err) {
     throw err;
