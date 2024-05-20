@@ -9,7 +9,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 //Configuration of the api
 module.exports = {
-  port: process.env.PORT,
+  port: process.env.PORT ?? 3001,
   api: {
     prefix: "/api/v1",
   },
