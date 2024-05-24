@@ -118,11 +118,27 @@ const requestForgotPassword = async (email) => {
     return {
       cryptoToken,
       email: user.email,
-      url: `/reset-password?token=${cryptoToken}&id=${user.id}`,
+      url: `reset-password?token=${cryptoToken}&id=${user.id}`,
     };
   } catch (err) {
     throw err;
   }
+};
+
+const resetPassword = async (id, token, password) => {
+  const user = await tokenService.findByUserId(id);
+  if (!user) {
+    throw new AppError("Token not found", 404);
+  }
+
+  const isTokenValid = await bcrypt.compare(token, user.token);
+  if (!isTokenValid) {
+    throw new AppError("Token is not valid", 401);
+  }
+
+  await userService.update(id, { password: password });
+  await tokenService.remove(id);
+  return "Password has been reset successfully";
 };
 
 _encrypt = (id) => {
@@ -135,4 +151,5 @@ module.exports = {
   validToken,
   validRole,
   requestForgotPassword,
+  resetPassword,
 };
