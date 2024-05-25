@@ -22,7 +22,7 @@ const _idNumberRequired = check("idNumber", "ID number required")
 
 const _idNumberIsNumber = check(
   "idNumber",
-  "Cedula is not a number",
+  "Cedula is not a number"
 ).isNumeric();
 const _idNumberExist = check("idNumber").custom(async (idNumber = "") => {
   const userFound = await userService.findByIdNumber(idNumber);
@@ -36,6 +36,12 @@ const _emailValid = check("email", "Not a valid Email address").isEmail();
 const _passwordRequired = check("password", "Password required")
   .not()
   .isEmpty();
+
+const _passwordLength = check("password").custom(async (password = "") => {
+  if (password.length < 8) {
+    throw new AppError("The password must be longer than 8 characters");
+  }
+});
 const _emailExist = check("email").custom(async (email = "") => {
   const emailFound = await userService.findByEmail(email);
   if (emailFound) {
@@ -62,6 +68,7 @@ const userRegisterValidations = [
   _emailValid,
   _emailExist,
   _passwordRequired,
+  _passwordLength,
 ];
 
 module.exports = {

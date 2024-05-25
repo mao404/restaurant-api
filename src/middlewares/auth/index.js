@@ -9,6 +9,15 @@ const _passwordRequired = check("password", "Password required")
   .not()
   .isEmpty();
 
+const _passwordLength = check("password").custom(async (password = "") => {
+  if (password.length < 8) {
+    throw new AppError("The password must be longer than 8 characters");
+  }
+});
+
+const _tokenRequired = check("token", "Token is required").not().isEmpty();
+const _idRequired = check("id", "ID is required").not().isEmpty();
+
 const validJWT = async (req, res, next) => {
   try {
     const token = req.header("Authorization");
@@ -52,9 +61,25 @@ const postRegisterRequestValidations = [
   validationResult,
 ];
 
+const postForgotPasswordValidations = [
+  _emailRequired,
+  _emailValid,
+  validationResult,
+];
+
+const postResetPasswordValidations = [
+  _passwordRequired,
+  _passwordLength,
+  _tokenRequired,
+  _idRequired,
+  validationResult,
+];
+
 module.exports = {
   postLoginRequestValidations,
   postRegisterRequestValidations,
+  postForgotPasswordValidations,
+  postResetPasswordValidations,
   validJWT,
   hasRole,
 };
