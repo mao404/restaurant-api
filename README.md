@@ -128,6 +128,6 @@ The swagger documentation can be accesed in the route
 - Filter ✅
 - Refactor axios http requests ✅
 - Forgot password module ✅
-- Reset password module
-- New modules validations
+- Reset password module ✅
+- New modules validations ✅
 - Nodemailer forgot password
