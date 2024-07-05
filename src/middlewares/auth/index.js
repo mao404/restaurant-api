@@ -15,6 +15,16 @@ const _passwordLength = check("password").custom(async (password = "") => {
   }
 });
 
+const _requiredCharacters = check("password").custom(async (password = "") => {
+  const pattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[.+#,^]).+$/;
+
+  if (!pattern.test(password)) {
+    throw new AppError(
+      "Password must have at least one uppercase letter, one number, and one of the following symbols: . + # , ^"
+    );
+  }
+});
+
 const _tokenRequired = check("token", "Token is required").not().isEmpty();
 const _idRequired = check("id", "ID is required").not().isEmpty();
 
@@ -70,6 +80,7 @@ const postForgotPasswordValidations = [
 const postResetPasswordValidations = [
   _passwordRequired,
   _passwordLength,
+  _requiredCharacters,
   _tokenRequired,
   _idRequired,
   validationResult,
