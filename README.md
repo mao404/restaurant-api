@@ -131,3 +131,4 @@ The swagger documentation can be accesed in the route
 - Reset password module ✅
 - New modules validations ✅
 - Nodemailer forgot password
+- Password validation length and use of capital letters, numbers, etc
