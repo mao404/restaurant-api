@@ -132,3 +132,4 @@ The swagger documentation can be accesed in the route
 - New modules validations ✅
 - Nodemailer forgot password
 - Password validation length and use of capital letters, numbers, etc ✅
+- Reset password Token valid only for certain time
