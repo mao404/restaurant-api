@@ -136,11 +136,23 @@ const resetPassword = async (id, token, password) => {
     throw new AppError("Token is not valid", 401);
   }
 
+  const isTokenExpired = isValidTime(user.createdAt);
+  if (isTokenExpired) {
+    throw new AppError("Token has expired", 401);
+  }
+
   await userService.update(id, { password: password });
   await tokenService.remove(id);
   return "Password has been reset successfully";
 };
 
+const isValidTime = (createdAt) => {
+  const currentTime = new Date();
+  const tokenTime = new Date(createdAt);
+  const differenceInMinutes = (currentTime - tokenTime) / (1000 * 60);
+
+  return differenceInMinutes > 30;
+};
 _encrypt = (id) => {
   return jwt.sign({ id }, config.auth.secret, { expiresIn: config.auth.ttl });
 };
