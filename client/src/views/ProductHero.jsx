@@ -3,7 +3,8 @@ import Button from "../components/Button";
 import Typography from "../components/Typography";
 import ProductHeroLayout from "./ProductHeroLayout";
 
-const backgroundImage = "https://source.unsplash.com/random?hamburguer";
+const backgroundImage =
+  "https://img.freepik.com/free-photo/front-view-burgers-stand_141793-15545.jpg?t=st=1720838253~exp=1720841853~hmac=c227294979e42fec05d2df0262b3e257e07867cb82d84ffaeef196b49ee4fe0d&w=1380";
 
 export default function ProductHero() {
   return (

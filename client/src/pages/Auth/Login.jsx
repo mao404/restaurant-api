@@ -69,7 +69,8 @@ export default function SignInSide() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: "url(https://source.unsplash.com/random?hamburguer)",
+          backgroundImage:
+            "url(https://img.freepik.com/free-photo/front-view-woman-eating-meat-burger_141793-17490.jpg?t=st=1720838446~exp=1720842046~hmac=c9fbb1314af24d2dedbc0567173e4247f7f65bed9c68dc9c9262cf4f53152989&w=1380)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
