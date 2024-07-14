@@ -133,3 +133,4 @@ The swagger documentation can be accesed in the route
 - Nodemailer forgot password
 - Password validation length and use of capital letters, numbers, etc ✅
 - Reset password Token valid only for certain time ✅
+- Docker file, docker compose
