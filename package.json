@@ -7,7 +7,7 @@
     "dev": "npx nodemon src",
     "prettier": "npx prettier --write .",
     "start": "node src",
-    "test": "npx newman run src\\postman\\RestaurantAPI.postman_collection.json -r htmlextra --reporter-htmlextra-export src/postman/report.html"
+    "test": "node src/postman/newman"
   },
   "keywords": [],
   "author": "",

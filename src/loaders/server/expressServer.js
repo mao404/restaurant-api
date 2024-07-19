@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
@@ -38,6 +39,10 @@ class ExpressServer {
       res.status(200).end();
     });
 
+    this.app.get("/tests", (req, res) => {
+      res.sendFile(path.join(__dirname + "../../../postman/report.html"));
+    });
+
     this.app.use(this.basePathUser, require("../../routes/users"));
     this.app.use(this.basePathMenu, require("../../routes/menu"));
     this.app.use(this.basePathInventory, require("../../routes/inventory"));
@@ -59,7 +64,7 @@ class ExpressServer {
       const code = err.code || 500;
 
       logger.error(
-        `${code} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`,
+        `${code} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`
       );
       logger.error(err.stack);
 
@@ -83,7 +88,7 @@ class ExpressServer {
     this.app.use(
       config.swagger.path,
       swaggerUi.serve,
-      swaggerUi.setup(require("../swagger/swagger.json")),
+      swaggerUi.setup(require("../swagger/swagger.json"))
     );
   }
 
