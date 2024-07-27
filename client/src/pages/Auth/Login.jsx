@@ -15,6 +15,22 @@ import Typography from "@mui/material/Typography";
 import { useErrorBoundary } from "react-error-boundary";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Please enter email"),
+  password: Yup.string()
+    .required("Please enter password")
+    .min(8, "Password must be at least eight characters long"),
+});
+
+const initialValues = {
+  email: "",
+  password: "",
+};
 
 function Copyright(props) {
   return (
@@ -39,115 +55,130 @@ export default function SignInSide() {
   const navigate = useNavigate();
   const cookies = new Cookies();
 
-  const [login, setLogin] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    setLogin((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const res = await axios.post("/auth/login", login);
-      //document.cookie = `Authorization = Bearer ${res.data.data.token}`;
+      const res = await axios.post("/auth/login", values);
       cookies.set("Authorization", res.data.data.token);
       navigate("/panel");
     } catch (err) {
       showBoundary(err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      <CssBaseline />
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-        sx={{
-          backgroundImage:
-            "url(https://img.freepik.com/free-photo/front-view-woman-eating-meat-burger_141793-17490.jpg?t=st=1720838446~exp=1720842046~hmac=c9fbb1314af24d2dedbc0567173e4247f7f65bed9c68dc9c9262cf4f53152989&w=1380)",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-          <Typography component="h1" variant="h5">
-            Ingresar
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+    <Formik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting }) => (
+        <Grid container component="main" sx={{ height: "100vh" }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
+            sx={{
+              backgroundImage:
+                "url(https://img.freepik.com/free-photo/front-view-woman-eating-meat-burger_141793-17490.jpg?t=st=1720838446~exp=1720842046~hmac=c9fbb1314af24d2dedbc0567173e4247f7f65bed9c68dc9c9262cf4f53152989&w=1380)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              onChange={handleChange}
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              onChange={handleChange}
-              label="Contraseña"
-              type="password"
-              id="password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Recuerdame"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              Ingresar
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Olvidó su contraseña?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"No tiene cuenta? Registrese"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Copyright sx={{ mt: 5 }} />
-          </Box>
-        </Box>
-      </Grid>
-    </Grid>
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
+              <Typography component="h1" variant="h5">
+                Ingresar
+              </Typography>
+              <Form noValidate>
+                <Field
+                  as={TextField}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  style={{ color: "red" }}
+                />
+                <Field
+                  as={TextField}
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Contraseña"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  style={{ color: "red" }}
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Recuerdame"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  disabled={isSubmitting}
+                >
+                  Ingresar
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Olvidó su contraseña?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="/register" variant="body2">
+                      {"No tiene cuenta? Registrese"}
+                    </Link>
+                  </Grid>
+                </Grid>
+                <Copyright sx={{ mt: 5 }} />
+              </Form>
+            </Box>
+          </Grid>
+        </Grid>
+      )}
+    </Formik>
   );
 }
