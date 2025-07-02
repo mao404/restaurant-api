@@ -134,3 +134,4 @@ The swagger documentation can be accesed in the route
 - Password validation length and use of capital letters, numbers, etc ✅
 - Reset password Token valid only for certain time ✅
 - Docker file, docker compose
+- Migrate to TypeScript
